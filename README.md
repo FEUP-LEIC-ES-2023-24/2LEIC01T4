@@ -9,12 +9,10 @@ You can find here details about the _[your product name]_, from a high-level vis
   * [Features and Assumptions](#Features-and-Assumptions)
   * [Elevator Pitch](#Elevator-pitch)
 * [Requirements](#Requirements)
-  * [User stories](#User-stories)
   * [Domain model](#Domain-model)
 * [Architecture and Design](#Architecture-And-Design)
   * [Logical architecture](#Logical-Architecture)
   * [Physical architecture](#Physical-Architecture)
-  * [Vertical prototype](#Vertical-Prototype)
 * [Project management](#Project-Management)
 
 Contributions are expected to be made exclusively by the initial team, but we may open them to the community, after the course, in all areas and topics: requirements, technologies, development, experimentation, testing, etc.
@@ -23,7 +21,7 @@ Please contact us!
 
 Thank you!
 
-*team members names and emails*
+Henrique Marques (up202208752@fe.up.pt), Francisco Moura (up202208750@fe.up.pt), Diogo Faria (up202205201@fe.up.pt), Miguel Mateus (up202206944@fe.up.pt), Ilaha Rahmanzade (up202311893@fe.up.pt)
 
 ---
 ## Business Modelling
@@ -67,28 +65,6 @@ Take a look at the following links to learn some techniques:
 
 In this section, you should describe all kinds of requirements for your module: functional and non-functional requirements.
 
-### User stories
-> [!Caution] This section will *not* exist in your report, it is here only to explain how you should describe the requirements of the product as **user stories**.
-
-The user stories should be created as GitHub items in the Project board. 
-
-A user story is a description of desired functionality told from the perspective of the user or customer. A starting template for the description of a user story is *As a < user role >, I want < goal > so that < reason >.*
-
-User stories should be created and described as items in your GitHub Project with the label "user story".
-
-You should name the item with either the full text of the user story or a shorter name, up to you, and, in the "comments" field, add all relevant notes, the image(s) of the user interface mockup(s) (see below) and the acceptance test scenarios (see below), linking to its acceptance test in Gherkin, whenever available.
-
-**INVEST in good user stories**. 
-You may add more details after, but the shorter and complete, the better. In order to decide if the user story is good, please follow the [INVEST guidelines](https://xp123.com/articles/invest-in-good-stories-and-smart-tasks/).
-
-**User interface mockups**.
-After the user story text, you should add a draft of the corresponding user interfaces, a simple mockup or draft, if applicable.
-
-**Acceptance tests**.
-For each user story you should write also the acceptance tests (textually in [Gherkin](https://cucumber.io/docs/gherkin/reference/)), i.e., a description of scenarios (situations) that will help to confirm that the system satisfies the requirements addressed by the user story.
-
-**Value and effort**.
-At the end, it is good to add a rough indication of the value of the user story to the customers (e.g. [MoSCoW](https://en.wikipedia.org/wiki/MoSCoW_method) method) and the team should add an estimation of the effort to implement it, for example, using points in a kind-of-a Fibonnacci scale (1,2,3,5,8,13,20,40, no idea).
 
 ### Domain model
 
@@ -124,13 +100,6 @@ It should describe also the technologies considered and justify the selections m
 Example of _UML deployment diagram_ showing a _deployment view_ of the Eletronic Ticketing System (please notice that, instead of software components, one should represent their physical/executable manifestations for deployment, called artifacts in UML; the diagram should be accompanied by a short description of each node and artifact):
 
 ![DeploymentView](https://user-images.githubusercontent.com/9655877/160592491-20e85af9-0758-4e1e-a704-0db1be3ee65d.png)
-
-### Vertical prototype
-To help on validating all the architectural, design and technological decisions made, we usually implement a vertical prototype, a thin vertical slice of the system integrating as much technologies we can.
-
-In this subsection please describe which feature, or part of it, you have implemented, and how, together with a snapshot of the user interface, if applicable.
-
-At this phase, instead of a complete user story, you can simply implement a small part of a feature that demonstrates thay you can use the technology, for example, show a screen with the app credits (name and authors).
 
 
 ## Project management
