@@ -1,7 +1,3 @@
-<!-- Template file for README.md for LEIC-ES-2023-24 -->
-
-> [!NOTE] In this file you can find the structure to use to document your app as a product in the README.md file. Along the file you will find guidelines that you can delete or comment
-
 # _[your product name]_ Development Report
 
 Welcome to the documentation pages of the _[your product name]_!
@@ -98,7 +94,7 @@ At the end, it is good to add a rough indication of the value of the user story 
 
 
  <p align="center" justify="center">
-  <img src="[https://github.com/FEUP-LEIC-ES-2022-23/templates/blob/main/images/DomainModel.png](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC01T4/blob/main/domainModelling.png)"/>
+  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC01T4/blob/main/domainModelling.png"/>
 </p>
 
 
