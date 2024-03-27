@@ -7,12 +7,10 @@ Feature: Trip Information
         - Phone number of the driver
         - Date and Time of Departure
         - Price per person
-        - Number of available spots in this trip
-        - Pets allowed
         
     Scenario: Trip Information Unavailable
         Given a user clicks on  "View Details" button for a specific trip
-        When the driver didn't those Details
-        Then he will be shown an error message saying "to be filled"
+        When the driver didn't post all details
+        Then he will be shown an message saying "to be filled" in front of each unavailable field.
         And will have to discuss those detailes directly withthe driver
 
