@@ -85,8 +85,3 @@ Application Server: Hosts both the frontend and backend components of the applic
 Database Server: Represents the server hosting the database, responsible for storing and managing persistent data required by the application.
 Communication flows from the mobile app to the frontend application hosted on the Application Server. The frontend application interacts with the backend services also hosted on the Application Server. The backend services communicate bidirectionally with the Database Server for data storage and retrieval operations.
 ![DeploymentView](https://user-images.githubusercontent.com/9655877/160592491-20e85af9-0758-4e1e-a704-0db1be3ee65d.png)
-
-* Sprint planning and retrospectives: 
-  * plans: screenshots of Github Projects board at begin and end of each iteration;
-  * retrospectives: meeting notes in a document in the repository;
- 
