@@ -26,7 +26,7 @@ Henrique Marques (up202208752@fe.up.pt), Francisco Moura (up202208750@fe.up.pt),
 
 ### Product Vision
 
-To make travelling affordable and unique.
+To make travelling greener.
 
 ### Elevator Pitch
 
@@ -51,11 +51,11 @@ In this section, you should describe all kinds of requirements for your module: 
 ### Logical architecture
 The Frontend Application component is responsible for user interface functionalities, while the Backend Services handle business logic and interact with the database. Additionally, the Backend Services facilitate communication with the Rating and Review System to manage user feedback and with the Reporting Service to handle reports of undesirable behavior.
 
-![LogicalView](https://user-images.githubusercontent.com/9655877/160585416-b1278ad7-18d7-463c-b8c6-afa4f7ac7639.png)
+![LogicalView](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC01T4/blob/ReadMeUpdating/docs/logical.png)
 
 ### Physical architecture
 User's Device: Represents the user's mobile device running the mobile app.
 Application Server: Hosts both the frontend and backend components of the application, including the database.
 Database Server: Represents the server hosting the database, responsible for storing and managing persistent data required by the application.
 Communication flows from the mobile app to the frontend application hosted on the Application Server. The frontend application interacts with the backend services also hosted on the Application Server. The backend services communicate bidirectionally with the Database Server for data storage and retrieval operations.
-![DeploymentView](https://user-images.githubusercontent.com/9655877/160592491-20e85af9-0758-4e1e-a704-0db1be3ee65d.png)
+![DeploymentView](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC01T4/blob/ReadMeUpdating/docs/deployment.png)
