@@ -1,0 +1,12 @@
+com.example.get_a_lift.app-jetified-window-1.0.0-beta04-0 C:\Users\Diogo\.gradle\caches\transforms-3\31f2453ab65acf7c20b76cb9faa421bf\transformed\jetified-window-1.0.0-beta04\res
+com.example.get_a_lift.app-jetified-window-java-1.0.0-beta04-1 C:\Users\Diogo\.gradle\caches\transforms-3\7db101307879bb8ab1a1e7e2913e41b6\transformed\jetified-window-java-1.0.0-beta04\res
+com.example.get_a_lift.app-jetified-annotation-experimental-1.1.0-2 C:\Users\Diogo\.gradle\caches\transforms-3\b400e81dc3a445a0bd3b855924417c45\transformed\jetified-annotation-experimental-1.1.0\res
+com.example.get_a_lift.app-core-1.6.0-3 C:\Users\Diogo\.gradle\caches\transforms-3\d8953e86b798637402f9cb18322d5a5a\transformed\core-1.6.0\res
+com.example.get_a_lift.app-main-4 C:\Users\Diogo\Desktop\ES\2LEIC01T4\src\get_a_lift\android\app\src\main\res
+com.example.get_a_lift.app-release-5 C:\Users\Diogo\Desktop\ES\2LEIC01T4\src\get_a_lift\android\app\src\release\res
+com.example.get_a_lift.app-pngs-6 C:\Users\Diogo\Desktop\ES\2LEIC01T4\src\get_a_lift\build\app\generated\res\pngs\release
+com.example.get_a_lift.app-resValues-7 C:\Users\Diogo\Desktop\ES\2LEIC01T4\src\get_a_lift\build\app\generated\res\resValues\release
+com.example.get_a_lift.app-rs-8 C:\Users\Diogo\Desktop\ES\2LEIC01T4\src\get_a_lift\build\app\generated\res\rs\release
+com.example.get_a_lift.app-mergeReleaseResources-9 C:\Users\Diogo\Desktop\ES\2LEIC01T4\src\get_a_lift\build\app\intermediates\incremental\release\mergeReleaseResources\merged.dir
+com.example.get_a_lift.app-mergeReleaseResources-10 C:\Users\Diogo\Desktop\ES\2LEIC01T4\src\get_a_lift\build\app\intermediates\incremental\release\mergeReleaseResources\stripped.dir
+com.example.get_a_lift.app-merged_res-11 C:\Users\Diogo\Desktop\ES\2LEIC01T4\src\get_a_lift\build\app\intermediates\merged_res\release
