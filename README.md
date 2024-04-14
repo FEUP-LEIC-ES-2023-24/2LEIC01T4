@@ -1,12 +1,11 @@
-# _[your product name]_ Development Report
+# GetALift Development Report
 
-Welcome to the documentation pages of the _[your product name]_!
+Welcome to the documentation pages of the GetALift!
 
-You can find here details about the _[your product name]_, from a high-level vision to low-level implementation decisions, a kind of Software Development Report, organized by type of activities: 
+You can find here details about the GetALift, from a high-level vision to low-level implementation decisions, a kind of Software Development Report, organized by type of activities: 
 
 * [Business modeling](#Business-Modelling) 
   * [Product Vision](#Product-Vision)
-  * [Features and Assumptions](#Features-and-Assumptions)
   * [Elevator Pitch](#Elevator-pitch)
 * [Requirements](#Requirements)
   * [Domain model](#Domain-model)
@@ -27,37 +26,11 @@ Henrique Marques (up202208752@fe.up.pt), Francisco Moura (up202208750@fe.up.pt),
 
 ### Product Vision
 
-Start by defining a clear and concise vision for your app, to help members of the team, contributors, and users into focusing their often disparate views into a concise, visual, and short textual form. It provides a "high concept" of the product for marketers, developers, and managers.
-
-A product vision describes the essential of the product and sets the direction to where a product is headed, and what the product will deliver in the future. 
-
-**We favor a catchy and concise statement, ideally one sentence.**
-
-We suggest you use the product vision template described in the following link:
-* [How To Create A Convincing Product Vision To Guide Your Team, by uxstudioteam.com](https://uxstudioteam.com/ux-blog/product-vision/)
-
-To learn more about how to write a good product vision, please see also:
-* [Product Management: Product Vision, by ProductPlan](https://www.productplan.com/glossary/product-vision/)
-* [Vision, by scrumbook.org](http://scrumbook.org/value-stream/vision.html)
-* [How to write a vision, by dummies.com](https://www.dummies.com/business/marketing/branding/how-to-write-vision-and-mission-statements-for-your-brand/)
-* [20 Inspiring Vision Statement Examples (2019 Updated), by lifehack.org](https://www.lifehack.org/articles/work/20-sample-vision-statement-for-the-new-startup.html)
-
-
-### Features and Assumptions
-Indicate an  initial/tentative list of high-level features - high-level capabilities or desired services of the system that are necessary to deliver benefits to the users.
- - Feature XPTO - a few words to briefly describe the feature
- - Feature ABCD - ...
-...
-
-Optionally, indicate an initial/tentative list of assumptions that you are doing about the app and dependencies of the app to other systems.
+Imagine an innovative mobile app designed to revolutionize the way people travel by fostering eco-consciousness, social interaction, and cost savings. That is GetALift, an app that connects travelers with similar destinations, enabling them to join forces to reduce their carbon footprint and expenses while enjoying enriching social experiences along the way.
 
 ### Elevator Pitch
-Draft a small text to help you quickly introduce and describe your product in a short time (lift travel time ~90 seconds) and a few words (~800 characters), a technique usually known as elevator pitch.
 
-Take a look at the following links to learn some techniques:
-* [Crafting an Elevator Pitch](https://www.mindtools.com/pages/article/elevator-pitch.htm)
-* [The Best Elevator Pitch Examples, Templates, and Tactics - A Guide to Writing an Unforgettable Elevator Speech, by strategypeak.com](https://strategypeak.com/elevator-pitch-examples/)
-* [Top 7 Killer Elevator Pitch Examples, by toggl.com](https://blog.toggl.com/elevator-pitch-examples/)
+This app is for travelers, that see themselves struggling with the high costs of travelling and are searching for a cheaper and more sustainable solution. GetALift is designed to enable users to communicate between themselves to arrange trips, where you could either be a driver or a passenger, making an even split of all costs for all participants of the trip. Why not use the already know companies to travel?  Unlike companies like Uber and Bolt, GetALift allows to make longer trips much more affordable and more enjoyable, since you get to meet lots of new people. Our product distinguishes itself by the eco-friendly and more economic approach to an overcrowded market, that’s greener in every way possible.
 
 
 ## Requirements
@@ -69,7 +42,7 @@ In this section, you should describe all kinds of requirements for your module: 
 
 
  <p align="center" justify="center">
-  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC01T4/blob/main/domainModelling.png"/>
+  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC01T4/blob/main/docs/domainModelling.png"/>
 </p>
 
 
@@ -78,11 +51,11 @@ In this section, you should describe all kinds of requirements for your module: 
 ### Logical architecture
 The Frontend Application component is responsible for user interface functionalities, while the Backend Services handle business logic and interact with the database. Additionally, the Backend Services facilitate communication with the Rating and Review System to manage user feedback and with the Reporting Service to handle reports of undesirable behavior.
 
-![LogicalView](https://user-images.githubusercontent.com/9655877/160585416-b1278ad7-18d7-463c-b8c6-afa4f7ac7639.png)
+![LogicalView](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC01T4/blob/main/docs/logical.png)
 
 ### Physical architecture
 User's Device: Represents the user's mobile device running the mobile app.
 Application Server: Hosts both the frontend and backend components of the application, including the database.
 Database Server: Represents the server hosting the database, responsible for storing and managing persistent data required by the application.
 Communication flows from the mobile app to the frontend application hosted on the Application Server. The frontend application interacts with the backend services also hosted on the Application Server. The backend services communicate bidirectionally with the Database Server for data storage and retrieval operations.
-![DeploymentView](https://user-images.githubusercontent.com/9655877/160592491-20e85af9-0758-4e1e-a704-0db1be3ee65d.png)
+![DeploymentView](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC01T4/blob/main/docs/deployment.png)
