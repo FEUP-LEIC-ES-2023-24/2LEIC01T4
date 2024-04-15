@@ -13,7 +13,7 @@ You can find here details about the GetALift, from a high-level vision to low-le
   * [Logical architecture](#Logical-Architecture)
   * [Physical architecture](#Physical-Architecture)
 * [Project management](#Project-Management)
-  *[Sprint 1].(#Sprint-1).
+  * [Sprint 1](#Sprint-1)
 
 
 Contributions are expected to be made exclusively by the initial team, but we may open them to the community, after the course, in all areas and topics: requirements, technologies, development, experimentation, testing, etc.
