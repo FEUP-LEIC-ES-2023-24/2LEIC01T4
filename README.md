@@ -67,4 +67,7 @@ Communication flows from the mobile app to the frontend application hosted on th
 ## Project management
 
 ### Sprint 1
-
+<div style="display: flex;">
+    <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC01T4/blob/main/docs/Sprint1%20beginning.jpeg" alt="Sprint1 before" style="flex: 1;">
+    <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC01T4/blob/main/docs/Sprint1%20final.jpeg" alt="Sprint1 after" style="flex: 1;">
+</div>
