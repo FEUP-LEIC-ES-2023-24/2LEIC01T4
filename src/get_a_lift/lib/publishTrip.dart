@@ -1,11 +1,42 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get_a_lift/notifications/toast.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
-void main() => runApp(MaterialApp(
-  home: publishTrip(),
-));
+import 'firebase_auth_implementation/firebase_auth_services.dart';
 
-class publishTrip extends StatelessWidget {
+
+class PublishTrip extends StatefulWidget {
+  const PublishTrip({super.key});
+
+  @override
+  State<PublishTrip> createState() => publishTrip();
+}
+
+
+class publishTrip extends State<PublishTrip> {
+
+  final FirebaseAuthService _auth = FirebaseAuthService();
+
+  TextEditingController _departureController = TextEditingController();
+  TextEditingController _destinationController = TextEditingController();
+  TextEditingController _petfriendlyController = TextEditingController();
+  TextEditingController _priceController = TextEditingController();
+  TextEditingController _numberController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
+
+
+  @override
+  void dispose() {
+    _departureController.dispose();
+    _destinationController.dispose();
+    _petfriendlyController.dispose();
+    _priceController.dispose();
+    _numberController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,6 +89,7 @@ class publishTrip extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: TextField(
+                    controller: _departureController,
                     style: TextStyle(
                       color: Colors.white70,
                     ),
@@ -75,6 +107,7 @@ class publishTrip extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: TextField(
+                    controller: _destinationController,
                     style: TextStyle(
                       color: Colors.white70,
                     ),
@@ -92,6 +125,7 @@ class publishTrip extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: TextField(
+                    controller: _priceController,
                     style: TextStyle(
                       color: Colors.white70,
                     ),
@@ -109,6 +143,7 @@ class publishTrip extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: TextField(
+                    controller: _numberController,
                     style: TextStyle(
                       color: Colors.white70,
                     ),
@@ -146,6 +181,7 @@ class publishTrip extends StatelessWidget {
                           'No',
                         ],
                         onToggle: (index) {
+                          _petfriendlyController.text = index == 0 ? 'Yes' : 'No';
                           print('switched to: $index');
                         },
                       ),
@@ -156,6 +192,7 @@ class publishTrip extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: TextField(
+                    controller: _descriptionController,
                     style: TextStyle(
                       color: Colors.white70,
                     ),
@@ -173,7 +210,9 @@ class publishTrip extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      _publish();
+                    },
                     child: Text(
                       'Submit',
                       style: TextStyle(
@@ -194,5 +233,29 @@ class publishTrip extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _publish() async{
+    String departure = _departureController.text;
+    String destination = _destinationController.text;
+    String petfriendly = _petfriendlyController.text;
+    String price = _priceController.text;
+    String number = _numberController.text;
+    String description = _descriptionController.text;
+
+    addTripDetails(departure, destination, petfriendly, double.parse(price), int.parse(number), description);
+    showToast(message: "Trip has been posted");
+    Navigator.pushNamed(context, "/home");
+  }
+
+  Future addTripDetails(String departure, String destination, String petfriendly, double price, int number, String description) async{
+    await FirebaseFirestore.instance.collection('trips').add({
+      'departure': departure,
+      'destination': destination,
+      'petfriendly': petfriendly,
+      'price': price,
+      'number of passengers': number,
+      'description': description,
+    });
   }
 }

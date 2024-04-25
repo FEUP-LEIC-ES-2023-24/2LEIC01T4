@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.get_a_lift.app-mergeDebugResources-9:/values-night-v8/values-night-v8.xml",
+            "outputFile": "com.example.get_a_lift.app-mergeDebugResources-19:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Diogo\\Desktop\\ES\\2LEIC01T4\\src\\get_a_lift\\android\\app\\src\\main\\res\\values-night\\styles.xml",
+                    "source": "C:\\Users\\Utilizador\\Documents\\ESOF\\2LEIC01T4\\src\\get_a_lift\\android\\app\\src\\main\\res\\values-night\\styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",

@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get_a_lift/publishTrip.dart';
 import 'package:get_a_lift/searchTrip.dart';
 
-void main() => runApp(MaterialApp(
-  home: homePage(),
-));
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
-class homePage extends StatelessWidget {
+  @override
+  State<HomePage> createState() => homePage();
+}
+
+class homePage extends State<HomePage> {
   @override
    Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +22,7 @@ class homePage extends StatelessWidget {
       body: TextButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => searchTrip(),
+                builder: (context) => SearchTrip(),
                 ));
         },
         child: Text(
@@ -36,10 +39,11 @@ class homePage extends StatelessWidget {
         foregroundColor: Colors.white,
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => publishTrip(),
+                builder: (context) => PublishTrip(),
           ));
         },
       ),
     );
   }
 }
+

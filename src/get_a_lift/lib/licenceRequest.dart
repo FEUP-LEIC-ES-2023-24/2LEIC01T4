@@ -3,11 +3,14 @@ import 'package:flutter/widgets.dart';
 import 'package:get_a_lift/homePage.dart';
 
 
-void main() => runApp(MaterialApp(
-  home: licenceRequest(),
-));
+class LicenceRequest extends StatefulWidget {
+  const LicenceRequest({super.key});
 
-class licenceRequest extends StatelessWidget {
+  @override
+  State<LicenceRequest> createState() => licenceRequest();
+}
+
+class licenceRequest extends State<LicenceRequest> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +51,7 @@ class licenceRequest extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => homePage(),
+                builder: (context) => HomePage(),
                 ));
               },
               child: Text(

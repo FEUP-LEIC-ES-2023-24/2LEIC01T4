@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "936008036598",
+    "project_id": "esof-d7026",
+    "storage_bucket": "esof-d7026.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:936008036598:android:d96cbbb6008534437ffcd7",
+        "android_client_info": {
+          "package_name": "com.example.get_a_lift"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5YngxB-D2JwBz4Dnlf76Kb9zD-4PU3J0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
