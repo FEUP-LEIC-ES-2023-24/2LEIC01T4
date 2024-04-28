@@ -1,35 +1,54 @@
-
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_a_lift/Details.dart';
-import 'package:get_a_lift/GetinfoTrip.dart';
+import 'package:get_a_lift/GetInfoTrip.dart';
+
 
 class SearchTrip extends StatefulWidget {
   const SearchTrip({super.key});
 
   @override
-  State<SearchTrip> createState() => searchTrip();
+  State<SearchTrip> createState() => _SearchTripState();
 }
 
-class searchTrip extends State<SearchTrip> {
+class _SearchTripState extends State<SearchTrip> {
   final user = FirebaseAuth.instance.currentUser!;
 
+  List<String> cities = [];
   List<String> docIDs = [];
 
   Future getDocId() async {
     await FirebaseFirestore.instance.collection('trips').get().then(
-        (snapshot) => snapshot.docs.forEach(
-                (document) {
-                  print(document.reference);
-                  docIDs.add(document.reference.id);
-                },
-        ),
+          (snapshot) => snapshot.docs.forEach(
+            (document) {
+          print(document.reference);
+          docIDs.add(document.reference.id);
+        },
+      ),
     );
-}
+  }
 
-  TextEditingController _departureController = TextEditingController();
-  TextEditingController _destinationController = TextEditingController();
+
+  Future<void> getCitiesDocId() async {
+    final districts = FirebaseFirestore.instance.collection('districts');
+    final snapshot = await districts.get();
+    for (final document in snapshot.docs) {
+      final data = document.data() as Map<String, dynamic>;
+      cities.add(data['nome']);
+    }
+    setState(() {}); // Update the state
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getCitiesDocId(); // Call getCitiesDocId when the widget is initialized
+  }
+
+  final _departureController = TextEditingController();
+  final _destinationController = TextEditingController();
 
   @override
   void dispose() {
@@ -62,22 +81,58 @@ class searchTrip extends State<SearchTrip> {
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(right: 8.0),
-                      child: TextField(
-                        controller: _departureController,
-                        decoration: InputDecoration(
-                          labelText: 'Departure',
+                      child: TypeAheadField(
+                        textFieldConfiguration: TextFieldConfiguration(
+                          autofocus: true,
+                          controller: _departureController,
+                          decoration: const InputDecoration(
+                            hintText: 'Departure city...',
+                          ),
                         ),
+                        suggestionsCallback: (pattern) {
+                          return cities
+                              .where((country) => country.toLowerCase().contains(pattern.toLowerCase()))
+                              .toList();
+                        },
+                        itemBuilder: (context, suggestion) {
+                          return ListTile(
+                            title: Text(suggestion),
+                          );
+                        },
+                        onSuggestionSelected: (suggestion) {
+                          // Handle when a suggestion is selected.
+                          _departureController.text = suggestion;
+                          print('Selected city: $suggestion');
+                        },
                       ),
                     ),
                   ),
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8.0),
-                      child: TextField(
-                        controller: _destinationController,
-                        decoration: InputDecoration(
-                          labelText: 'Destination',
+                      child: TypeAheadField(
+                        textFieldConfiguration: TextFieldConfiguration(
+                          autofocus: true,
+                          controller: _destinationController,
+                          decoration: const InputDecoration(
+                            hintText: 'Departure city...',
+                          ),
                         ),
+                        suggestionsCallback: (pattern) {
+                          return cities
+                              .where((country) => country.toLowerCase().contains(pattern.toLowerCase()))
+                              .toList();
+                        },
+                        itemBuilder: (context, suggestion) {
+                          return ListTile(
+                            title: Text(suggestion),
+                          );
+                        },
+                        onSuggestionSelected: (suggestion) {
+                          // Handle when a suggestion is selected.
+                          _destinationController.text = suggestion;
+                          print('Selected city: $suggestion');
+                        },
                       ),
                     ),
                   ),
@@ -85,13 +140,13 @@ class searchTrip extends State<SearchTrip> {
               ),
               SizedBox(height: 20), // Spacer between the Row and Column
               Expanded(
-                child: FutureBuilder(
-                  future: getDocId(),
-                  builder: (context, snapshot) {
-                    return ListView.builder(
-                      itemCount: docIDs.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
+                  child: FutureBuilder(
+                    future: getDocId(),
+                    builder: (context, snapshot) {
+                      return ListView.builder(
+                        itemCount: docIDs.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
                             onTap: () {
                               // Navigate to a new page or show more details when the item is clicked
                               Navigator.push(
@@ -101,14 +156,14 @@ class searchTrip extends State<SearchTrip> {
                                 ),
                               );
                             },
-                        child: ListTile(
-                          title: GetinfoTrip(documentId: docIDs[index]),
-                        ),
-                        );
-                      },
-                    );
-                  },
-                )
+                            child: ListTile(
+                              title: GetinfoTrip(documentId: docIDs[index]),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  )
               ),
             ],
           ),
@@ -117,5 +172,3 @@ class searchTrip extends State<SearchTrip> {
     );
   }
 }
-
-

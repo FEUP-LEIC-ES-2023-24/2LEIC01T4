@@ -29,6 +29,8 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   toggle_switch: ^2.3.0
+  image_picker: ^0.8.7+2
+  flutter_typeahead: ^4.6.2
   flutter:
     sdk: flutter
 

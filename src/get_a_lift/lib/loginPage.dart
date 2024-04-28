@@ -33,95 +33,95 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.grey.shade800,
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.grey.shade800,
 
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-          'Login',
-          style: TextStyle(
-            color: Colors.green,
-            fontFamily: 'Poppins',
-            fontSize: 50,
-            
-          ),
-        ),
-
-        Padding(
-            padding: const EdgeInsets.fromLTRB(100, 100, 100, 8),
-            child: TextField(
-              controller: _emailController,
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Login',
               style: TextStyle(
-                color: Colors.white70,
+                color: Colors.green,
+                fontFamily: 'Poppins',
+                fontSize: 50,
+
               ),
-              decoration: InputDecoration(
-                hintText: 'Email',
-                hintStyle: TextStyle(
-                  color: Colors.white60,
-                  fontFamily: 'Poppins',
+            ),
+
+            Padding(
+              padding: const EdgeInsets.fromLTRB(100, 100, 100, 8),
+              child: TextField(
+                controller: _emailController,
+                style: TextStyle(
+                  color: Colors.white70,
                 ),
-                border: OutlineInputBorder(),
-              ),
-            ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.fromLTRB(100, 8, 100, 8),
-            child: TextField(
-              controller: _passwordController,
-              style: TextStyle(
-                color: Colors.white70,
-              ),
-              decoration: InputDecoration(
-                hintText: 'Password',
-                hintStyle: TextStyle(
-                  color: Colors.white60,
-                  fontFamily: 'Poppins',
+                decoration: InputDecoration(
+                  hintText: 'Email',
+                  hintStyle: TextStyle(
+                    color: Colors.white60,
+                    fontFamily: 'Poppins',
+                  ),
+                  border: OutlineInputBorder(),
                 ),
-                border: OutlineInputBorder(),
               ),
             ),
-          ),
 
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
-            child: Text(
-              "Don't have an account?",
-              style: TextStyle(
-                color: Colors.white70,
-                
+            Padding(
+              padding: const EdgeInsets.fromLTRB(100, 8, 100, 8),
+              child: TextField(
+                controller: _passwordController,
+                style: TextStyle(
+                  color: Colors.white70,
+                ),
+                decoration: InputDecoration(
+                  hintText: 'Password',
+                  hintStyle: TextStyle(
+                    color: Colors.white60,
+                    fontFamily: 'Poppins',
+                  ),
+                  border: OutlineInputBorder(),
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
-            child: TextButton(
-              onPressed: () {
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => RegisterPage()),
-                        (route) => false);
-              },
-              child: Text('Sign up here!'),
-            ),
-          ),
 
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 20, 8.0, 8.0),
-            child: TextButton(
-              onPressed: () {
-                _login();
-              },
-              child: Text('Submit'),
-            ),
-          )
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
+              child: Text(
+                "Don't have an account?",
+                style: TextStyle(
+                  color: Colors.white70,
 
-        ],
-      )
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RegisterPage()),
+                          (route) => false);
+                },
+                child: Text('Sign up here!'),
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 20, 8.0, 8.0),
+              child: TextButton(
+                onPressed: () {
+                  _login();
+                },
+                child: Text('Submit'),
+              ),
+            )
+
+          ],
+        )
 
     );
   }
@@ -136,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
       showToast(message: "User is successfully signed in");
       Navigator.pushNamed(context, "/home");
     } else {
-      showToast(message: "some error occured");
+      showToast(message: "some error occurred");
     }
   }
 }

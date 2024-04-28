@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get_a_lift/DriverRegister.dart';
 import 'package:get_a_lift/homePage.dart';
 
 
@@ -32,7 +33,11 @@ class licenceRequest extends State<LicenceRequest> {
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 100, 10, 10),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => DriverRegisterPage(),
+                ));
+              },
               child: Text(
                 'Register As Driver',
                 style: TextStyle(

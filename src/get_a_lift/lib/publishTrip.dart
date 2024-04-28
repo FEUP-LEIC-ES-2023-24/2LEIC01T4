@@ -42,7 +42,7 @@ class publishTrip extends State<PublishTrip> {
     return Scaffold(
       backgroundColor: Colors.grey.shade800,
       appBar: AppBar(
-        backgroundColor: Colors.green.shade300,
+        backgroundColor: Colors.green.shade500,
         title: Text(
           'Publish Your Trip',
           style: TextStyle(
@@ -99,7 +99,13 @@ class publishTrip extends State<PublishTrip> {
                         color: Colors.white60,
                         fontFamily: 'Poppins',
                       ),
-                      border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide(
+                                color: Colors.green.shade300,
+                                width: 2
+                            )
+                        )
                     ),
                   ),
                 ),
@@ -117,7 +123,13 @@ class publishTrip extends State<PublishTrip> {
                         color: Colors.white60,
                         fontFamily: 'Poppins',
                       ),
-                      border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide(
+                                color: Colors.green.shade300,
+                                width: 2
+                            )
+                        )
                     ),
                   ),
                 ),
@@ -135,7 +147,13 @@ class publishTrip extends State<PublishTrip> {
                         color: Colors.white60,
                         fontFamily: 'Poppins',
                       ),
-                      border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide(
+                                color: Colors.green.shade300,
+                                width: 2
+                            )
+                        )
                     ),
                   ),
                 ),
@@ -153,7 +171,13 @@ class publishTrip extends State<PublishTrip> {
                         color: Colors.white60,
                         fontFamily: 'Poppins',
                       ),
-                      border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide(
+                                color: Colors.green.shade300,
+                                width: 2
+                            )
+                        )
                     ),
                   ),
                 ),
@@ -202,7 +226,13 @@ class publishTrip extends State<PublishTrip> {
                         color: Colors.white60,
                         fontFamily: 'Poppins',
                       ),
-                      border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide(
+                                color: Colors.green.shade300,
+                                width: 2
+                            )
+                        )
                     ),
                   ),
                 ),
@@ -216,7 +246,7 @@ class publishTrip extends State<PublishTrip> {
                     child: Text(
                       'Submit',
                       style: TextStyle(
-                        color: Colors.white70,
+                        color: Colors.white,
                         fontFamily: 'Poppins',
                         ),
                       ),
