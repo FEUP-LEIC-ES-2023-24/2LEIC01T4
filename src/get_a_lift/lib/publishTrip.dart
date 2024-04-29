@@ -286,6 +286,7 @@ class publishTrip extends State<PublishTrip> {
       'price': price,
       'number of passengers': number,
       'description': description,
+      'publisher': 'someone',
     });
   }
 }

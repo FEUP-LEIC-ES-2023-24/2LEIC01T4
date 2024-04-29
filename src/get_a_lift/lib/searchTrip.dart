@@ -15,6 +15,8 @@ class SearchTrip extends StatefulWidget {
 
 class _SearchTripState extends State<SearchTrip> {
   final user = FirebaseAuth.instance.currentUser!;
+  CollectionReference trips = FirebaseFirestore.instance.collection('trips');
+
 
   List<String> cities = [];
   List<String> docIDs = [];
@@ -69,6 +71,12 @@ class _SearchTripState extends State<SearchTrip> {
         appBar: AppBar(
           title: Text('Trips'),
           centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -89,10 +97,10 @@ class _SearchTripState extends State<SearchTrip> {
                             hintText: 'Departure city...',
                           ),
                         ),
-                        suggestionsCallback: (pattern) {
-                          return cities
-                              .where((country) => country.toLowerCase().contains(pattern.toLowerCase()))
-                              .toList();
+                        suggestionsCallback: (pattern) async {
+                          final districts = FirebaseFirestore.instance.collection('districts');
+                          final snapshot = await districts.where('nome', isGreaterThanOrEqualTo: pattern).get();
+                          return snapshot.docs.map((doc) => doc['nome']).toList();
                         },
                         itemBuilder: (context, suggestion) {
                           return ListTile(
@@ -102,7 +110,9 @@ class _SearchTripState extends State<SearchTrip> {
                         onSuggestionSelected: (suggestion) {
                           // Handle when a suggestion is selected.
                           _departureController.text = suggestion;
-                          print('Selected city: $suggestion');
+                          print('Selected departure city: $suggestion');
+                          // Trigger the state update to reflect the filtered list
+                          setState(() {});
                         },
                       ),
                     ),
@@ -115,13 +125,13 @@ class _SearchTripState extends State<SearchTrip> {
                           autofocus: true,
                           controller: _destinationController,
                           decoration: const InputDecoration(
-                            hintText: 'Departure city...',
+                            hintText: 'Destination city...',
                           ),
                         ),
-                        suggestionsCallback: (pattern) {
-                          return cities
-                              .where((country) => country.toLowerCase().contains(pattern.toLowerCase()))
-                              .toList();
+                        suggestionsCallback: (pattern) async {
+                          final districts = FirebaseFirestore.instance.collection('districts');
+                          final snapshot = await districts.where('nome', isGreaterThanOrEqualTo: pattern).get();
+                          return snapshot.docs.map((doc) => doc['nome']).toList();
                         },
                         itemBuilder: (context, suggestion) {
                           return ListTile(
@@ -131,7 +141,9 @@ class _SearchTripState extends State<SearchTrip> {
                         onSuggestionSelected: (suggestion) {
                           // Handle when a suggestion is selected.
                           _destinationController.text = suggestion;
-                          print('Selected city: $suggestion');
+                          print('Selected destination city: $suggestion');
+                          // Trigger the state update to reflect the filtered list
+                          setState(() {});
                         },
                       ),
                     ),
@@ -140,35 +152,74 @@ class _SearchTripState extends State<SearchTrip> {
               ),
               SizedBox(height: 20), // Spacer between the Row and Column
               Expanded(
-                  child: FutureBuilder(
-                    future: getDocId(),
-                    builder: (context, snapshot) {
+                child: FutureBuilder(
+                  future: getDocId(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator()); // Show loading indicator while fetching data
+                    } else {
+                      // Create a set to store unique trip IDs
+                      Set<String> uniqueTripIds = Set<String>();
                       return ListView.builder(
                         itemCount: docIDs.length,
                         itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              // Navigate to a new page or show more details when the item is clicked
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => DetailsTrip(documentId: docIDs[index]),
-                                ),
-                              );
+                          return FutureBuilder<DocumentSnapshot>(
+                            future: trips.doc(docIDs[index]).get(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.done) {
+                                Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+                                String departureCity = data['departure'];
+                                String destinationCity = data['destination'];
+                                String tripId = docIDs[index];
+                                // Check if the trip matches the selected criteria and if it's not already added to the set
+                                bool matchesDeparture = departureCity.toLowerCase().contains(_departureController.text.toLowerCase()) || _departureController.text.isEmpty;
+                                bool matchesDestination = destinationCity.toLowerCase().contains(_destinationController.text.toLowerCase()) || _destinationController.text.isEmpty;
+                                if (matchesDeparture && matchesDestination && !uniqueTripIds.contains(tripId)) {
+                                  // Add the trip ID to the set
+                                  uniqueTripIds.add(tripId);
+                                  return GestureDetector(
+                                    onTap: () {
+                                      // Navigate to a new page or show more details when the item is clicked
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => DetailsTrip(documentId: tripId),
+                                        ),
+                                      );
+                                    },
+                                    child: ListTile(
+                                      title: Text('$departureCity >> $destinationCity'),
+                                    ),
+                                  );
+                                } else {
+                                  // If the trip does not match the selected criteria or it's already added, don't display it
+                                  return SizedBox.shrink();
+                                }
+                              } else {
+                                // Show loading indicator while fetching data for this trip
+                                return SizedBox(
+                                  height: 24.0,
+                                  width: 24.0,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2.0,
+                                  ),
+                                );
+                              }
                             },
-                            child: ListTile(
-                              title: GetinfoTrip(documentId: docIDs[index]),
-                            ),
                           );
                         },
                       );
-                    },
-                  )
+                    }
+                  },
+                ),
               ),
+
             ],
           ),
         ),
+
       ),
     );
   }
 }
+

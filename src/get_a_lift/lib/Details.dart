@@ -1,5 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get_a_lift/contact_driver_page.dart'; // Import FirebaseAuth if you're using Firebase Authentication
 
 class DetailsTrip extends StatelessWidget {
   final String documentId;
@@ -9,6 +10,8 @@ class DetailsTrip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CollectionReference trips = FirebaseFirestore.instance.collection('trips');
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Trip Details"),
@@ -25,8 +28,9 @@ class DetailsTrip extends StatelessWidget {
           } else if (snapshot.hasError) {
             return Text("Error: ${snapshot.error}");
           } else if (snapshot.connectionState == ConnectionState.done) {
-            Map<String, dynamic> data =
-            snapshot.data!.data() as Map<String, dynamic>;
+            Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+            String publisherUsername = data['publisher'];
+
             return ListView(
               padding: EdgeInsets.all(16.0),
               children: [
@@ -54,6 +58,27 @@ class DetailsTrip extends StatelessWidget {
                   title: Text('Description'),
                   subtitle: Text(data['description']),
                 ),
+                ListTile(
+                  title: Text('Publisher'),
+                  subtitle: Text(publisherUsername),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    QuerySnapshot userQuery = await users.where('username', isEqualTo: publisherUsername).get();
+                    if (userQuery.docs.isNotEmpty) {
+                      String userId = userQuery.docs.first.id;
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ContactDriverPage(documentId: userId),
+                        ),
+                      );
+                    } else {
+                      print('User not found with username: $publisherUsername');
+                    }
+                  },
+                  child: Text('Contact $publisherUsername'),
+                ),
               ],
             );
           } else {
@@ -76,3 +101,4 @@ class DetailsTrip extends StatelessWidget {
     }
   }
 }
+
