@@ -79,3 +79,14 @@ Communication flows from the mobile app to the frontend application hosted on th
 </div>
 On this sprint were able to do what we propose ourselves to do, so we think that our estimates on the user_stories were accurate. On another hand, we didn't make the unit tests and we were dividing the work between us by different techonogies, for exemple the features and the tests were assigned to different persons on the same feature. To sum up, the next sprint we have to conclude tests and we will divide the work by feature that we think is a better option to coordinate it between us.
 
+
+### Sprint 2
+
+<div style="text-align: center;">
+    <div>Sprint 2 start:</div>
+    <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC01T4/blob/main/docs/Sprint2%20before.png" alt="Sprint2 before" style="width: 100%;">
+</div>
+
+
+
+
