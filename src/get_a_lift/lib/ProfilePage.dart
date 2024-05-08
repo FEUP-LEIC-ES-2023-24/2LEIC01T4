@@ -9,19 +9,65 @@ void main() => runApp(MaterialApp(
   home: ProfilePage(),
 ));
 
-class ProfilePage extends StatelessWidget {
-  // Dummy trip data (replace this with actual data retrieval logic)
+class ProfilePage extends StatefulWidget {
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  late User? user;
+  late String? username;
   List<String> docIDs = [];
 
-  Future getDocId() async {
-    await FirebaseFirestore.instance.collection('trips').get().then(
-          (snapshot) => snapshot.docs.forEach(
-            (document) {
-          print(document.reference);
-          docIDs.add(document.reference.id);
-        },
-      ),
-    );
+  @override
+  void initState() {
+    super.initState();
+    user = FirebaseAuth.instance.currentUser;
+    getUsername();
+  }
+
+  Future<void> getUsername() async {
+    if (user != null) {
+      String? email = user!.email;
+      if (email != null) {
+        String? name = await _getUsername(email);
+        setState(() {
+          username = name;
+        });
+        getTrips();
+      }
+    }
+  }
+
+  Future<String?> _getUsername(String email) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('email', isEqualTo: email)
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        return snapshot.docs.first.get('username');
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print('Error fetching username: $e');
+      return null;
+    }
+  }
+
+  Future<void> getTrips() async {
+    if (username != null) {
+      QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+          .collection('trips')
+          .where('publisher', isEqualTo: username)
+          .get();
+
+      setState(() {
+        docIDs = snapshot.docs.map((doc) => doc.id).toList();
+      });
+    }
   }
 
   @override
@@ -43,15 +89,16 @@ class ProfilePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Username: JohnDoe', // Replace with dynamic username retrieval
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'Poppins',
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+            if (username != null)
+              Text(
+                'Username: $username',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'Poppins',
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
             SizedBox(height: 16),
             Text(
               'Your Trips:',
@@ -63,27 +110,21 @@ class ProfilePage extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: FutureBuilder(
-                future: getDocId(),
-                builder: (context, snapshot) {
-                  return ListView.builder(
-                    itemCount: docIDs.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          // Navigate to a new page or show more details when the item is clicked
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DetailsTrip(documentId: docIDs[index]),
-                            ),
-                          );
-                        },
-                        child: ListTile(
-                          title: ProfileInfoTrip(documentId: docIDs[index]),
+              child: ListView.builder(
+                itemCount: docIDs.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailsTrip(documentId: docIDs[index]),
                         ),
                       );
                     },
+                    child: ListTile(
+                      title: ProfileInfoTrip(documentId: docIDs[index]),
+                    ),
                   );
                 },
               ),
@@ -94,6 +135,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 }
+
 
 // Model class for Trip data
 class Trip {

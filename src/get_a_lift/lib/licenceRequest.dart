@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_a_lift/DriverRegister.dart';
 import 'package:get_a_lift/homePage.dart';
+import 'package:get_a_lift/homePagePassenger.dart';
 
 
 class LicenceRequest extends StatefulWidget {
@@ -56,7 +57,7 @@ class licenceRequest extends State<LicenceRequest> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => HomePage(),
+                builder: (context) => HomePagePassenger(),
                 ));
               },
               child: Text(

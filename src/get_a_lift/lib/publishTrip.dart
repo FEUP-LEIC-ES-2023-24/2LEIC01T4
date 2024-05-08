@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_a_lift/notifications/toast.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -17,6 +18,7 @@ class PublishTrip extends StatefulWidget {
 class publishTrip extends State<PublishTrip> {
 
   final FirebaseAuthService _auth = FirebaseAuthService();
+  final user = FirebaseAuth.instance.currentUser;
 
   TextEditingController _departureController = TextEditingController();
   TextEditingController _destinationController = TextEditingController();
@@ -265,7 +267,7 @@ class publishTrip extends State<PublishTrip> {
     );
   }
 
-  void _publish() async{
+  void _publish() async {
     String departure = _departureController.text;
     String destination = _destinationController.text;
     String petfriendly = _petfriendlyController.text;
@@ -273,12 +275,38 @@ class publishTrip extends State<PublishTrip> {
     String number = _numberController.text;
     String description = _descriptionController.text;
 
-    addTripDetails(departure, destination, petfriendly, double.parse(price), int.parse(number), description);
+    String? userEmail = user?.email; // Get current user's email
+    String publisher = await _getPublisherName(userEmail!) ?? "Unknown";
+
+    addTripDetails(departure, destination, petfriendly, double.parse(price), int.parse(number), description, publisher);
     showToast(message: "Trip has been posted");
     Navigator.pushNamed(context, "/home");
   }
 
-  Future addTripDetails(String departure, String destination, String petfriendly, double price, int number, String description) async{
+  Future<String?> _getPublisherName(String email) async {
+    try {
+      // Fetch user's username from database using email
+      QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('email', isEqualTo: email)
+          .get();
+
+      // Check if any document matches the email
+      if (snapshot.docs.isNotEmpty) {
+        // Return the username from the first document found
+        return snapshot.docs.first.get('username');
+      } else {
+        // Return null if no matching document found
+        return null;
+      }
+    } catch (e) {
+      // Handle any potential errors
+      print('Error fetching username: $e');
+      return null;
+    }
+  }
+
+  Future addTripDetails(String departure, String destination, String petfriendly, double price, int number, String description, String publisher) async{
     await FirebaseFirestore.instance.collection('trips').add({
       'departure': departure,
       'destination': destination,
@@ -286,7 +314,7 @@ class publishTrip extends State<PublishTrip> {
       'price': price,
       'number of passengers': number,
       'description': description,
-      'publisher': 'someone',
+      'publisher': publisher,
     });
   }
 }

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_a_lift/firebase_auth_implementation/firebase_auth_services.dart';
@@ -21,6 +22,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
+  TextEditingController _confirmpasswordController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
 
@@ -30,6 +32,7 @@ class _RegisterPageState extends State<RegisterPage> {
     _emailController.dispose();
     _passwordController.dispose();
     _phoneController.dispose();
+    _confirmpasswordController.dispose();
     super.dispose();
   }
 
@@ -128,6 +131,7 @@ class _RegisterPageState extends State<RegisterPage> {
           Padding(
             padding: const EdgeInsets.fromLTRB(100, 2, 100, 2),
             child: TextField(
+              controller: _confirmpasswordController,
               style: TextStyle(
                 color: Colors.white70,
               ),
@@ -187,20 +191,22 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  void _register() async{
+  void _register() async {
     String username = _usernameController.text;
     String email = _emailController.text;
     String password = _passwordController.text;
     String phonenumber = _phoneController.text;
+    String confpassword = _confirmpasswordController.text;
 
-    User? user = await _auth.registerWithEmailAndPassword(email, password);
-
-    if (user != null) {
-      addUserDetails(username, email, int.parse(phonenumber));
-      showToast(message: "User is successfully created");
-      Navigator.pushNamed(context, "/licenceRequest");
-    } else {
-      showToast(message: "Some error happend");
+    if (passwordConfirmed()) {
+      User? user = await _auth.registerWithEmailAndPassword(email, password);
+      if (user != null) {
+        addUserDetails(username, email, int.parse(phonenumber));
+        showToast(message: "User is successfully created");
+        Navigator.pushNamed(context, "/licenceRequest");
+      } else {
+        showToast(message: "Some error happend");
+      }
     }
   }
 
@@ -209,6 +215,16 @@ class _RegisterPageState extends State<RegisterPage> {
       'username': username,
       'email': email,
       'phone number': phone,
+      'permission': "passenger",
     });
+  }
+
+  bool passwordConfirmed(){
+    if(_passwordController.text.trim() == _confirmpasswordController.text.trim()){
+      return true;
+    } else{
+      showToast(message: "Two different passwords");
+      return false;
+    }
   }
 }

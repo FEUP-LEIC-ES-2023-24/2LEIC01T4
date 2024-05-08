@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get_a_lift/homePagePassenger.dart';
 import 'package:get_a_lift/licenceRequest.dart';
 import 'package:get_a_lift/loginPage.dart';
 import 'package:get_a_lift/publishTrip.dart';
@@ -21,12 +22,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Get a lift',
-      home: LoginPage(),
+      home: const LoginPage(),
       routes: {
-        '/login': (context) => LoginPage(),
-        '/register': (context) => RegisterPage(),
-        '/home': (context) => HomePage(),
-        '/licenceRequest' : (context) => LicenceRequest(),
+        '/login': (context) => const LoginPage(),
+        '/register': (context) => const RegisterPage(),
+        '/home': (context) => const HomePage(),
+        '/licenceRequest' : (context) => const LicenceRequest(),
+        '/homePassenger': (context) => const HomePagePassenger(),
       },
     );
   }
