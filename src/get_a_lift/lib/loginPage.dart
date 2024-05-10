@@ -7,6 +7,7 @@ import 'package:get_a_lift/registerPage.dart';
 import 'package:get_a_lift/homePage.dart';
 import 'package:get_a_lift/widgets/form_container_widget.dart';
 
+import 'changePasswordPage.dart';
 import 'firebase_auth_implementation/firebase_auth_services.dart';
 
 
@@ -87,27 +88,56 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
 
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
-              child: Text(
-                "Don't have an account?",
-                style: TextStyle(
-                  color: Colors.white70,
 
-                ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                        MaterialPageRoute(
+                            builder: (context) {
+                              return changePasswordPage();
+                            }
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'Forgot Password?',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                  )
+                ],
               ),
             ),
+
             Padding(
-              padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
-              child: TextButton(
-                onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => RegisterPage()),
-                          (route) => false);
-                },
-                child: Text('Sign up here!'),
+              padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Don't have an account?",
+                    style: TextStyle(
+                      color: Colors.white70,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => RegisterPage()),
+                            (route) => false,
+                      );
+                    },
+                    child: Text('Sign up here!'),
+                  ),
+                ],
               ),
             ),
 
