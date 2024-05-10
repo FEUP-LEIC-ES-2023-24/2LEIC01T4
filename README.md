@@ -79,3 +79,18 @@ Communication flows from the mobile app to the frontend application hosted on th
 </div>
 On this sprint were able to do what we propose ourselves to do, so we think that our estimates on the user_stories were accurate. On another hand, we didn't make the unit tests and we were dividing the work between us by different techonogies, for exemple the features and the tests were assigned to different persons on the same feature. To sum up, the next sprint we have to conclude tests and we will divide the work by feature that we think is a better option to coordinate it between us.
 
+
+### Sprint 2
+
+<div style="text-align: center;">
+    <div>Sprint 2 start:</div>
+    <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC01T4/blob/main/docs/Sprint2%20before.png" alt="Sprint2 before" style="width: 100%;">
+</div>
+
+<div style="text-align: center;">
+    <div>Sprint 1 end:</div>
+    <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC01T4/blob/main/docs/Sprint2%20after.png" alt="Sprint2 after" style="width: 100%;">
+</div>
+
+On this sprint we were able to do what we propose ourselves to do, so we think that our estimates on the user_stories were accurate and we divide the work more evenly, each person had one user_story and that person had to do everything related to that user_story (tests, dart code, etc...). on another hand, we didn't use branches for each feature, we did work only with the main branch and our tests were not working correctly with the firebase implemented. To sum up, the next sprint we have to conclude the tests and we will try to use more branches when working in the user_stories so we are more organized.
+

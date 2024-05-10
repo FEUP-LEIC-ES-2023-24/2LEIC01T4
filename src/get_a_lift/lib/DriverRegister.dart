@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class DriverRegisterPage extends StatefulWidget {
 class _DriverRegisterState extends State<DriverRegisterPage> {
 
   final FirebaseAuthService _auth = FirebaseAuthService();
-
+  final CollectionReference users = FirebaseFirestore.instance.collection('users');
   Uint8List? _image;
 
   Future<void> selectImage() async {
@@ -130,16 +131,47 @@ class _DriverRegisterState extends State<DriverRegisterPage> {
     );
   }
 
-  void _addLicense() async{
-
-    if(_image == null){
+  void _addLicense() async {
+    if (_image == null) {
       showToast(message: "Please upload driver license!");
     } else {
-      await FirebaseFirestore.instance.collection('license').add({
-        'image': _image,
-      });
-      showToast(message: "Driver License submitted successfully!");
-      Navigator.pushNamed(context, "/home");
+      try {
+        // Get the email of the current authenticated user
+        String? email = FirebaseAuth.instance.currentUser?.email;
+
+        // Check if email is available
+        if (email != null) {
+          // Fetch the document ID of the user document in Firestore using the email
+          QuerySnapshot<Object?> snapshot = await users.where('email', isEqualTo: email).limit(1).get();
+
+          // Check if user document exists
+          if (snapshot.docs.isNotEmpty) {
+            String userId = snapshot.docs.first.id;
+
+            // Upload driver's license to Firestore
+            DocumentReference licenseRef = await FirebaseFirestore.instance.collection('license').add({
+              'userId': userId,
+              'image': _image,
+            });
+
+            // Update user's permission to "driver"
+            await users.doc(userId).update({
+              'permission': 'driver',
+              'licenseId': licenseRef.id, // Store license ID for reference
+            });
+
+            showToast(message: "Driver License submitted successfully!");
+            Navigator.pushNamed(context, "/home");
+          } else {
+            showToast(message: "User document not found!");
+          }
+        } else {
+          showToast(message: "Email not found!");
+        }
+      } catch (e) {
+        print("Error submitting driver's license: $e");
+        showToast(message: "Failed to submit driver license. Please try again later.");
+      }
     }
   }
 
