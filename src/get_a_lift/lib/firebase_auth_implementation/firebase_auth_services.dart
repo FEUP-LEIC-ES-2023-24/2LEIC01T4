@@ -29,4 +29,8 @@ class FirebaseAuthService {
       }
     }
   }
+
+  getCurrentUser() {
+    return _auth.currentUser;
+  }
 }

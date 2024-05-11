@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get_a_lift/Details.dart';
 import 'package:get_a_lift/GetinfoTrip.dart';
 import 'package:get_a_lift/ProfileInfoTrip.dart';
+import 'package:get_a_lift/changePasswordPage.dart';
 
 void main() => runApp(MaterialApp(
   home: ProfilePage(),
@@ -99,6 +100,22 @@ class _ProfilePageState extends State<ProfilePage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+            SizedBox(height: 16),
+            MaterialButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:(context) => changePasswordPage(),
+                  ),
+                );
+              },
+
+              child: Text(
+                'Change Password',
+              ),
+              color: Colors.blue,
+            ),
             SizedBox(height: 16),
             Text(
               'Your Trips:',
