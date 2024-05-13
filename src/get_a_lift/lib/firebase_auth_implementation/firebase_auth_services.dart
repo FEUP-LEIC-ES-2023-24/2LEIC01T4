@@ -7,7 +7,7 @@ class FirebaseAuthService {
   Future<User?> registerWithEmailAndPassword(String email, String password) async {
     try {
       UserCredential credential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      return credential.user; // No error, return null
+      return credential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
         showToast(message: 'The email address is already in use.');
@@ -20,7 +20,7 @@ class FirebaseAuthService {
   Future<User?> loginWithEmailAndPassword(String email, String password) async {
     try {
       UserCredential credential = await _auth.signInWithEmailAndPassword(email: email, password: password);
-      return credential.user; // No error, return null
+      return credential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
         showToast(message: 'Invalid email or password.');
@@ -28,5 +28,9 @@ class FirebaseAuthService {
         showToast(message: 'An error occurred: ${e.code}');
       }
     }
+  }
+
+  getCurrentUser() {
+    return _auth.currentUser;
   }
 }

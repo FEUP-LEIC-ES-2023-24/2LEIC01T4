@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get_a_lift/ChatBubble.dart';
+import 'package:get_a_lift/message.dart';
 
 class ContactDriverPage extends StatefulWidget {
   final String documentId;
@@ -12,11 +15,41 @@ class ContactDriverPage extends StatefulWidget {
 
 class _ContactDriverPageState extends State<ContactDriverPage> {
   late TextEditingController _messageController;
+  final CollectionReference users = FirebaseFirestore.instance.collection('users');
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  String? receiverID;
+  String? receiverUsername;
+  String? receiverEmail;
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
     _messageController = TextEditingController();
+    _fetchUserData();
+  }
+
+  Future<void> _fetchUserData() async {
+    try {
+      final snapshot = await users.doc(widget.documentId).get();
+      if (snapshot.exists) {
+        setState(() {
+          receiverID = snapshot.get('uid');
+          receiverUsername = snapshot.get('username');
+          receiverEmail = snapshot.get('email');
+          _isLoading = false;
+        });
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      print('Error fetching user data: $e');
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override
@@ -25,94 +58,118 @@ class _ContactDriverPageState extends State<ContactDriverPage> {
     super.dispose();
   }
 
+  void sendMessage() async {
+    if (_messageController.text.isNotEmpty) {
+      await _sendMessage(receiverID!, _messageController.text);
+      _messageController.clear();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    CollectionReference users = FirebaseFirestore.instance.collection('users'); // Changed collection reference to 'users'
-    return FutureBuilder<DocumentSnapshot>(
-      future: users.doc(widget.documentId).get(), // Fetching user document based on user ID
+    return Scaffold(
+      appBar: AppBar(
+        title: _isLoading ? Text('Loading...') : Text(receiverUsername ?? 'Driver'),
+      ),
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : Column(
+        children: [
+          Expanded(
+            child: _buildMessageList(),
+          ),
+          _buildUserInput(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMessageList() {
+    String senderID = auth.currentUser!.uid;
+    return StreamBuilder(
+      stream: _getMessage(receiverID!, senderID),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (snapshot.hasError) {
-          return Text("Error: ${snapshot.error}");
-        } else if (snapshot.connectionState == ConnectionState.done) {
-          Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-          return Scaffold(
-            appBar: AppBar(
-              title: Text('Contact ${data['username']}'),
-            ),
-            body: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Colors.blue.shade200, Color.fromARGB(255, 158, 83, 165)],
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Contact ${data['username']} via phone number:',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Implement logic to initiate a call to the driver's phone number
-                        print('Calling ${data['username']} at ${data['phone number']}...');
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.white),
-                        padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 20, vertical: 15)),
-                      ),
-                      child: Text(
-                        'Call ${data['username']}',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    TextField(
-                      controller: _messageController,
-                      decoration: InputDecoration(
-                        hintText: 'Enter your message...',
-                        border: OutlineInputBorder(),
-                        filled: true,
-                        fillColor: Color.fromARGB(0, 243, 243, 243),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                      ),
-                      maxLines: null,
-                    ),
-                    SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        String message = _messageController.text;
-                        // Implement logic to send the message to the driver
-                        print('Sending message to ${data['username']}: $message');
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.white),
-                        padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 20, vertical: 15)),
-                      ),
-                      child: Text(
-                        'Send message',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
+        if (snapshot.hasError) {
+          return Text("Error");
         }
-        return SizedBox(); // Placeholder for other states
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text("Loading..");
+        }
+        return ListView(
+          children: snapshot.data!.docs.map((doc) => _buildMessageItem(doc)).toList(),
+        );
       },
     );
   }
+
+  Widget _buildMessageItem(DocumentSnapshot doc) {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    bool isCurrentUser = data['senderID'] == auth.currentUser!.uid;
+    var alignments = isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
+    return Container(
+      alignment: alignments,
+        child: Column(
+          crossAxisAlignment:
+              isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          children: [
+            ChatBubble(message: data['message'], isCurrentUser: isCurrentUser),
+          ],
+        ),
+    );
+  }
+
+  Widget _buildUserInput() {
+    return Container(
+      color: Colors.grey[200], // Set the background color to grey
+      padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0), // Add padding to the bottom
+      child: Row(
+        children: [
+          Expanded(
+            child: TextField(
+              controller: _messageController,
+              obscureText: false,
+              decoration: InputDecoration(
+                border: InputBorder.none, // Remove the border
+                hintText: 'Type your message here...', // Add a hint text
+              ),
+            ),
+          ),
+          IconButton(
+            onPressed: sendMessage,
+            icon: Icon(Icons.arrow_upward),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+
+  Future<void> _sendMessage(String receiverID, message) async {
+    final String currentUserID = auth.currentUser!.uid;
+    final String currentUserEMAIL = auth.currentUser!.email!;
+    final Timestamp timestamp = Timestamp.now();
+
+    Message newMessage = Message(
+      senderID: currentUserID,
+      senderEmail: currentUserEMAIL,
+      receiverID: receiverID,
+      message: message,
+      timestamp: timestamp,
+    );
+
+    List<String> ids = [currentUserID, receiverID];
+    ids.sort();
+    String chatRoomID = ids.join('_');
+
+    await FirebaseFirestore.instance.collection("chat_rooms").doc(chatRoomID).collection("messages").add(newMessage.toMap());
+  }
+
+  Stream<QuerySnapshot> _getMessage(String userID, otherUserID) {
+    List<String> ids = [userID, otherUserID];
+    ids.sort();
+    String chatRoomID = ids.join('_');
+
+    return FirebaseFirestore.instance.collection("chat_rooms").doc(chatRoomID).collection("messages").orderBy("timestamp", descending: false).snapshots();
+  }
 }
-
-
