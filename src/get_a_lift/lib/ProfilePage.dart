@@ -7,6 +7,7 @@ import 'package:get_a_lift/ProfileInfoTrip.dart';
 import 'package:get_a_lift/ProfileReviews.dart';
 import 'package:get_a_lift/changePasswordPage.dart';
 import 'package:get_a_lift/licenceRequest.dart';
+import 'package:get_a_lift/preferences_screen.dart';
 
 void main() => runApp(MaterialApp(
   home: ProfilePage(),
@@ -164,7 +165,20 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               color: Colors.blue,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
+            if (permission == 'driver') ...[
+              MaterialButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const PreferencesScreen()),
+                  );
+                },
+                child: const Text('Preferences'),
+                color: Colors.blue,
+              ),
+            ],
+            const SizedBox(height: 16),
             if (permission == 'passenger') ...[
               MaterialButton(
                 onPressed: () {
