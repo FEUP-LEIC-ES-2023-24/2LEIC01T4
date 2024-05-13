@@ -1,67 +1,60 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_a_lift/Details.dart';
-import 'package:get_a_lift/GetinfoTrip.dart';
 import 'package:get_a_lift/ProfileInfoTrip.dart';
 import 'package:get_a_lift/ProfileReviews.dart';
-import 'package:get_a_lift/changePasswordPage.dart';
-import 'package:get_a_lift/licenceRequest.dart';
-import 'package:get_a_lift/preferences_screen.dart';
+import 'package:get_a_lift/contact_driver_page.dart';
 
 void main() => runApp(MaterialApp(
-  home: ProfilePage(),
+  home: ProfilePageOthers(username: "example_username"),
 ));
 
-class ProfilePage extends StatefulWidget {
+class ProfilePageOthers extends StatefulWidget {
+  final String username;
+
+  const ProfilePageOthers({required this.username});
+
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  _ProfilePageOthersState createState() => _ProfilePageOthersState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
-  late User? user;
-  String? username;
-  String? permission;
+class _ProfilePageOthersState extends State<ProfilePageOthers> {
+  late String username;
   String? rating;
   List<String> docIDs = [];
   List<String> reviewsIDs = [];
 
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+
   @override
   void initState() {
     super.initState();
-    user = FirebaseAuth.instance.currentUser;
-    getUsername();
+    username = widget.username;
+    getRating();
   }
 
-  Future<void> getUsername() async {
-    if (user != null) {
-      String? email = user!.email;
-      if (email != null) {
-        try {
-          final snapshot = await _getUserData(email);
-          if (snapshot != null) {
-            setState(() {
-              username = snapshot['username'];
-              permission = snapshot['permission'];
-              rating = snapshot['rating'].toString();
-            });
-            if (username != null) {
-              getTrips();
-              getReviews();
-            }
-          }
-        } catch (e) {
-          print('Error fetching user data: $e');
+  Future<void> getRating() async {
+    try {
+      final snapshot = await _getUserData(username);
+      if (snapshot != null) {
+        setState(() {
+          rating = snapshot['rating'].toString();
+        });
+        if (username != null) {
+          getTrips();
+          getReviews();
         }
       }
+    } catch (e) {
+      print('Error fetching user data: $e');
     }
   }
 
-  Future<Map<String, dynamic>?> _getUserData(String email) async {
+  Future<Map<String, dynamic>?> _getUserData(String username) async {
     try {
       final snapshot = await FirebaseFirestore.instance
           .collection('users')
-          .where('email', isEqualTo: email)
+          .where('username', isEqualTo: username)
           .get();
 
       if (snapshot.docs.isNotEmpty) {
@@ -116,7 +109,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Your Profile',
+          'Profile: $username',
           style: TextStyle(
             color: Colors.white,
             fontFamily: 'Poppins',
@@ -130,19 +123,8 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (username != null)
-              Text(
-                'Username: $username',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'Poppins',
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            SizedBox(height: 16),
             Text(
-              'Your Rating: ${_getRoundedRating()} ⭐',
+              'Username: $username',
               style: TextStyle(
                 color: Colors.black,
                 fontFamily: 'Poppins',
@@ -151,54 +133,18 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             SizedBox(height: 16),
-            MaterialButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => changePasswordPage(),
-                  ),
-                );
-              },
-              child: Text(
-                'Change Password',
+            Text(
+              'Rating: ${_getRoundedRating()} ⭐',
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: 'Poppins',
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
               ),
-              color: Colors.blue,
             ),
-            const SizedBox(height: 16),
-            if (permission == 'driver') ...[
-              MaterialButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const PreferencesScreen()),
-                  );
-                },
-                child: const Text('Preferences'),
-                color: Colors.blue,
-              ),
-            ],
-            const SizedBox(height: 16),
-            if (permission == 'passenger') ...[
-              MaterialButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LicenceRequest(),
-                    ),
-                  );
-                },
-                child: Text(
-                  "Add Driver's License",
-                ),
-                color: Colors.blue,
-              ),
-              SizedBox(height: 16),
-            ],
             SizedBox(height: 16),
             Text(
-              'Your Trips:',
+              'Trips:',
               style: TextStyle(
                 color: Colors.black,
                 fontFamily: 'Poppins',
@@ -250,25 +196,28 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         ),
       ),
+      bottomNavigationBar: Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(16.0),
+        child: ElevatedButton(
+          onPressed: () async {
+            QuerySnapshot userQuery = await users.where('username', isEqualTo: username).get();
+            if (userQuery.docs.isNotEmpty) {
+              String userId = userQuery.docs.first.id;
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ContactDriverPage(documentId: userId),
+                ),
+              );
+            } else {
+              print('User not found with username: $username');
+            }
+          },
+          child: Text('Contact $username'),
+        ),
+      ),
     );
   }
 }
 
-// Model class for Trip data
-class Trip {
-  final String departureCity;
-  final String destinationCity;
-  final String date;
-  final String description;
-  final String opinion;
-  final String reports;
-
-  Trip({
-    required this.departureCity,
-    required this.destinationCity,
-    required this.date,
-    required this.description,
-    required this.opinion,
-    required this.reports,
-  });
-}

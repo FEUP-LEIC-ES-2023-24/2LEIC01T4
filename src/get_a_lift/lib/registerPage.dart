@@ -216,6 +216,9 @@ class _RegisterPageState extends State<RegisterPage> {
       'email': email,
       'phone number': phone,
       'permission': "passenger",
+      'rating' : 5.0,
+      'number of reviews' : 0.0,
+      'uid': FirebaseAuth.instance.currentUser!.uid,
     });
   }
 

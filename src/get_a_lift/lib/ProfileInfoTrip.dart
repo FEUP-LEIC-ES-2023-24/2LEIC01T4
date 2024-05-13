@@ -17,7 +17,7 @@ class ProfileInfoTrip extends StatelessWidget {
           Map<String, dynamic> data =
           snapshot.data!.data() as Map<String, dynamic>;
           return Text(
-              '${data['departure']} >> ${data['destination']}\n${data['description']}\nRating: ${data['review']}'
+              '${data['departure']} >> ${data['destination']}'
           );
         }
         return Text('loading..');

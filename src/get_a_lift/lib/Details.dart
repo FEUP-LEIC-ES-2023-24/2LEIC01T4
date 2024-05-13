@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get_a_lift/ProfilePageOthers.dart';
 import 'package:get_a_lift/contact_driver_page.dart'; // Import FirebaseAuth if you're using Firebase Authentication
 
 class DetailsTrip extends StatelessWidget {
@@ -70,14 +71,14 @@ class DetailsTrip extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ContactDriverPage(documentId: userId),
+                          builder: (context) => ProfilePageOthers(username: publisherUsername),
                         ),
                       );
                     } else {
                       print('User not found with username: $publisherUsername');
                     }
                   },
-                  child: Text('Contact $publisherUsername'),
+                  child: Text("$publisherUsername's profile"),
                 ),
               ],
             );
