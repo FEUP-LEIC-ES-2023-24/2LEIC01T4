@@ -59,25 +59,40 @@ class _changePasswordPageState extends State<changePasswordPage> {
           'Change Your Password',
           style: TextStyle(
             fontFamily: 'Poppins',
+            fontSize: 20,
           ),
         ),
         centerTitle: true,
         backgroundColor: Colors.green,
       ),
-      body: Column(
+      body:Stack(
+        children: [
+        // Background image
+        Opacity(
+        opacity: 0.7,
+        child: Image.asset(
+          "assets/gradient.jpg",
+          fit: BoxFit.cover,
+          width: double.infinity,
+          height: double.infinity,
+        ),
+      ),
+      Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: Text(
-              'Enter your email for us to send an email!',
+              'Enter your email for you to receive an email to reset your password',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 18,
                 fontFamily: 'Poppins',
+                color: Colors.black,
               ),
             ),
           ),
+          SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 80),
             child: TextField(
@@ -89,7 +104,7 @@ class _changePasswordPageState extends State<changePasswordPage> {
               decoration: InputDecoration(
                 hintText: 'Email',
                 hintStyle: TextStyle(
-                  color: Colors.red,
+                  color: Colors.black,
                   fontFamily: 'Poppins',
                 ),
                 border: OutlineInputBorder(
@@ -98,14 +113,38 @@ class _changePasswordPageState extends State<changePasswordPage> {
               ),
             ),
           ),
-          MaterialButton(
+          SizedBox(height: 20),
+          ElevatedButton(
             onPressed: passwordReset,
             child: Text(
               'Reset Password',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontFamily: 'Poppins',
+              ),
             ),
-            color: Colors.blue,
+            style: ButtonStyle(
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                shadowColor: MaterialStateProperty.all<Color>(Colors.grey),
+                elevation: MaterialStateProperty.resolveWith<double>(
+                      (Set<MaterialState> states) {
+                    if (states.contains(MaterialState.pressed)) return 10;
+                    return 5; // default elevation
+                  },
+                ),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                ),
+                animationDuration: Duration(milliseconds: 200)
+            ),
           ),
         ],
+      ),
+      ],
       ),
     );
   }

@@ -19,61 +19,93 @@ class licenceRequest extends State<LicenceRequest> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey.shade800,
 
-      body: Stack(
+      body:Stack(
         children: [
-          Opacity(
-            opacity: 0.6,
-            child: Image.asset(
-              "assets/licenceRequest.jpg",
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: double.infinity,
-            )
-          ),
-
-          Padding(
-            padding: const EdgeInsets.fromLTRB(10, 100, 10, 10),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
+        // Background image
+        Opacity(
+        opacity: 0.7,
+        child: Image.asset(
+          "assets/gradient.jpg",
+          fit: BoxFit.cover,
+          width: double.infinity,
+          height: double.infinity,
+        ),
+      ),
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child:
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => DriverRegisterPage(),
-                ));
-              },
-              child: Text(
+              ));
+            },
+            child: Text(
                 'Register As Driver',
                 style: TextStyle(
-                  color: Colors.white70,
+                  fontFamily: 'Poppins',
+                  fontSize: 25,
+                  color: Colors.white,
+                )
+            ),
+            style: ButtonStyle(
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                shadowColor: MaterialStateProperty.all<Color>(Colors.grey),
+                elevation: MaterialStateProperty.resolveWith<double>(
+                      (Set<MaterialState> states) {
+                    if (states.contains(MaterialState.pressed)) return 10;
+                    return 5; // default elevation
+                  },
                 ),
-              ),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.grey.shade800),
-              ),
-              
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                ),
+                animationDuration: Duration(milliseconds: 200)
             ),
           ),
-
-          Padding(
-            padding: const EdgeInsets.fromLTRB(300, 100, 5, 10),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
+    ),
+          SizedBox(height: 30), // Add a space between the buttons
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => HomePagePassenger(),
-                ));
-              },
-              child: Text(
+              ));
+            },
+            child: Text(
                 'Continue As Passenger',
                 style: TextStyle(
-                  color: Colors.white70,
+                  fontFamily: 'Poppins',
+                  fontSize: 25,
+                  color: Colors.white,
+                )
+            ),
+            style: ButtonStyle(
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                shadowColor: MaterialStateProperty.all<Color>(Colors.grey),
+                elevation: MaterialStateProperty.resolveWith<double>(
+                      (Set<MaterialState> states) {
+                    if (states.contains(MaterialState.pressed)) return 10;
+                    return 5; // default elevation
+                  },
                 ),
-              ),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.grey.shade800),
-              ),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                ),
+                animationDuration: Duration(milliseconds: 200)
             ),
           ),
-
         ],
       )
+    ],
+    ),
     );
   }
 }

@@ -41,6 +41,7 @@ class PublishTripState extends State<PublishTrip> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey.shade800,
       appBar: AppBar(
         backgroundColor: Colors.green.shade500,
@@ -78,7 +79,7 @@ class PublishTripState extends State<PublishTrip> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,

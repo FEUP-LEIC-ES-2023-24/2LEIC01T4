@@ -40,7 +40,7 @@ class PreferencesScreen extends StatelessWidget {
                     },
                     child: Icon(
                       i <= driverPreferences.minimumRating ? Icons.star : Icons.star_border,
-                      color: Colors.yellow,
+                      color: Colors.yellow.shade600,
                       size: 40,
                     ),
                   ),
@@ -58,6 +58,7 @@ class PreferencesScreen extends StatelessWidget {
               child: const Text(
                 'Save Preferences',
                 style: TextStyle(
+                  color: Colors.white,
                   fontSize: 18,
                 ),
               ),

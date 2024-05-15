@@ -38,20 +38,30 @@ class _LoginPageState extends State<LoginPage> {
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.grey.shade800,
 
-        body: Column(
+        body: Stack(
+          children: [
+          // Background image
+          Opacity(
+          opacity: 0.7,
+          child: Image.asset(
+            "assets/gradient.jpg",
+            fit: BoxFit.cover,
+            width: double.infinity,
+            height: double.infinity,
+          ),
+        ),
+        Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
               'Login',
               style: TextStyle(
-                color: Colors.green,
-                fontFamily: 'Poppins',
+                color: Colors.white70,
                 fontSize: 50,
-
+                fontWeight: FontWeight.bold,
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.fromLTRB(100, 100, 100, 8),
               child: TextField(
@@ -62,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: InputDecoration(
                   hintText: 'Email',
                   hintStyle: TextStyle(
-                    color: Colors.white60,
+                    color: Colors.white70,
                     fontFamily: 'Poppins',
                   ),
                   border: OutlineInputBorder(),
@@ -80,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: InputDecoration(
                   hintText: 'Password',
                   hintStyle: TextStyle(
-                    color: Colors.white60,
+                    color: Colors.white70,
                     fontFamily: 'Poppins',
                   ),
                   border: OutlineInputBorder(),
@@ -107,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Text(
                       'Forgot Password?',
                       style: TextStyle(
-                        color: Colors.blue,
+                        color: Colors.grey.shade800,
                         fontWeight: FontWeight.bold,
                       ),
                     )
@@ -135,7 +145,12 @@ class _LoginPageState extends State<LoginPage> {
                             (route) => false,
                       );
                     },
-                    child: Text('Sign up here!'),
+                    child: Text('Sign up here!',
+                      style: TextStyle(
+                        color: Colors.grey.shade800,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -143,17 +158,41 @@ class _LoginPageState extends State<LoginPage> {
 
             Padding(
               padding: const EdgeInsets.fromLTRB(8.0, 20, 8.0, 8.0),
-              child: TextButton(
+              child: ElevatedButton(
                 onPressed: () {
                   _login();
                 },
-                child: Text('Submit'),
+                child: Text('Login',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Poppins',
+                    fontSize: 15,
+                  ),
+                ),
+                style: ButtonStyle(
+                    padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                    backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                    shadowColor: MaterialStateProperty.all<Color>(Colors.grey),
+                    elevation: MaterialStateProperty.resolveWith<double>(
+                          (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.pressed)) return 10;
+                        return 5; // default elevation
+                      },
+                    ),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                    ),
+                    animationDuration: Duration(milliseconds: 200)
+                ),
               ),
             )
 
           ],
         )
-
+      ],
+    ),
     );
   }
 
