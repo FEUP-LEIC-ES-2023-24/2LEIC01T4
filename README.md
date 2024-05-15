@@ -15,6 +15,9 @@ You can find here details about the GetALift, from a high-level vision to low-le
 * [Project management](#Project-Management)
   * [Sprint 1](#Sprint-1)
   * [Sprint 2](#Sprint-2)
+  * [Sprint 3](#Sprint-3)
+      * [Sprint review](#Sprint-review)
+      * [Sprint retrospective](#Sprint-retrospective)
 
 
 Contributions are expected to be made exclusively by the initial team, but we may open them to the community, after the course, in all areas and topics: requirements, technologies, development, experimentation, testing, etc.
@@ -110,3 +113,21 @@ On this sprint we were able to do what we propose ourselves to do, so we think t
 </div>
 
 
+### Sprint review
+
+Various pages on the app become easier to use, for exemple the home page. Futhermore, now there is a chat room which makes easier to talk with the driver and discuss the details of the trip. On the other hand, the serach trip page still need a little of work as of now is a little 'ugly'.
+
+
+### Sprint retrospective
+
+### What went well?
+
+As on the other sprint we were able to finnish all of the user_stories that we propose ourselves to do on this Sprint, and that way finnish all of them, which proves that our estimatives were accurate to what seemed essenssial for us to do in the time that we had. Moreover, we had time to already start little adjustaments to the visual of the app.
+
+### What could have gone better?
+
+We were not able to make the tests work, unit or aceptance, because of the way we were setting the sample database.
+
+### Puzzles?
+
+Except the problem with the tests with didn't have nothing that was creating confusion in the resolution of the project.
