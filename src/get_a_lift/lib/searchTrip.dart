@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get_a_lift/Details.dart';
 import 'package:get_a_lift/GetInfoTrip.dart';
 
-
 class SearchTrip extends StatefulWidget {
   const SearchTrip({super.key});
 
@@ -16,22 +15,40 @@ class SearchTrip extends StatefulWidget {
 class _SearchTripState extends State<SearchTrip> {
   final user = FirebaseAuth.instance.currentUser!;
   CollectionReference trips = FirebaseFirestore.instance.collection('trips');
+  double? userRating;
 
+  Future<void> fetchUserRating() async {
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('email', isEqualTo: user.email)
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        final data = snapshot.docs.first.data();
+        if (data != null && data.containsKey('rating')) {
+          setState(() {
+            userRating = data['rating'].toDouble();
+          });
+        }
+      }
+    } catch (e) {
+      print('Error fetching user rating: $e');
+    }
+  }
 
   List<String> cities = [];
   List<String> docIDs = [];
 
-  Future getDocId() async {
+  Future<void> getDocId() async {
     await FirebaseFirestore.instance.collection('trips').get().then(
           (snapshot) => snapshot.docs.forEach(
             (document) {
-          print(document.reference);
           docIDs.add(document.reference.id);
         },
       ),
     );
   }
-
 
   Future<void> getCitiesDocId() async {
     final districts = FirebaseFirestore.instance.collection('districts');
@@ -46,6 +63,7 @@ class _SearchTripState extends State<SearchTrip> {
   @override
   void initState() {
     super.initState();
+    fetchUserRating();
     getCitiesDocId(); // Call getCitiesDocId when the widget is initialized
   }
 
@@ -108,10 +126,8 @@ class _SearchTripState extends State<SearchTrip> {
                           );
                         },
                         onSuggestionSelected: (suggestion) {
-                          // Handle when a suggestion is selected.
                           _departureController.text = suggestion;
                           print('Selected departure city: $suggestion');
-                          // Trigger the state update to reflect the filtered list
                           setState(() {});
                         },
                       ),
@@ -139,10 +155,8 @@ class _SearchTripState extends State<SearchTrip> {
                           );
                         },
                         onSuggestionSelected: (suggestion) {
-                          // Handle when a suggestion is selected.
                           _destinationController.text = suggestion;
                           print('Selected destination city: $suggestion');
-                          // Trigger the state update to reflect the filtered list
                           setState(() {});
                         },
                       ),
@@ -167,30 +181,67 @@ class _SearchTripState extends State<SearchTrip> {
                             future: trips.doc(docIDs[index]).get(),
                             builder: (context, snapshot) {
                               if (snapshot.connectionState == ConnectionState.done) {
-                                Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                                String departureCity = data['departure'];
-                                String destinationCity = data['destination'];
-                                String tripId = docIDs[index];
-                                // Check if the trip matches the selected criteria and if it's not already added to the set
-                                bool matchesDeparture = departureCity.toLowerCase().contains(_departureController.text.toLowerCase()) || _departureController.text.isEmpty;
-                                bool matchesDestination = destinationCity.toLowerCase().contains(_destinationController.text.toLowerCase()) || _destinationController.text.isEmpty;
-                                if (matchesDeparture && matchesDestination && !uniqueTripIds.contains(tripId)) {
-                                  // Add the trip ID to the set
-                                  uniqueTripIds.add(tripId);
-                                  return GestureDetector(
-                                    onTap: () {
-                                      // Navigate to a new page or show more details when the item is clicked
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => DetailsTrip(documentId: tripId),
+                                if (snapshot.hasData) {
+                                  Map<String, dynamic> data = snapshot.data!
+                                      .data() as Map<String, dynamic>;
+                                  String departureCity = data['departure'];
+                                  String destinationCity = data['destination'];
+                                  double minimumRating;
+                                  if (data['minimumRating'] is int) {
+                                    minimumRating =
+                                        (data['minimumRating'] as int)
+                                            .toDouble();
+                                  } else {
+                                    minimumRating = data['minimumRating'];
+                                  }
+                                  DateTime departureDate = data['date']
+                                      .toDate(); // Assuming date field exists in your Firestore document
+                                  String tripId = docIDs[index];
+
+                                  bool matchesDeparture = departureCity
+                                      .toLowerCase().contains(
+                                      _departureController.text
+                                          .toLowerCase()) ||
+                                      _departureController.text.isEmpty;
+                                  bool matchesDestination = destinationCity
+                                      .toLowerCase().contains(
+                                      _destinationController.text
+                                          .toLowerCase()) ||
+                                      _destinationController.text.isEmpty;
+
+                                  // Check if the trip matches the selected criteria, rating, and if it's not already added to the set
+                                  if (matchesDeparture && matchesDestination &&
+                                      minimumRating <= userRating! &&
+                                      !uniqueTripIds.contains(tripId) &&
+                                      departureDate.isAfter(DateTime.now())) {
+                                    // Add the trip ID to the set
+                                    uniqueTripIds.add(tripId);
+                                    if (data['publisher'] != user.uid) {
+                                      return GestureDetector(
+                                        onTap: () {
+                                          // Navigate to a new page or show more details when the item is clicked
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DetailsTrip(
+                                                      documentId: tripId),
+                                            ),
+                                          );
+                                        },
+                                        child: ListTile(
+                                          title: Text(
+                                              '$departureCity >> $destinationCity'),
                                         ),
                                       );
-                                    },
-                                    child: ListTile(
-                                      title: Text('$departureCity >> $destinationCity'),
-                                    ),
-                                  );
+                                    } else {
+                                      // If the trip does not match the selected criteria or it's already added, don't display it
+                                      return SizedBox.shrink();
+                                    }
+                                  } else {
+                                    // Handle the case where snapshot.data is null
+                                    return SizedBox.shrink();
+                                  }
                                 } else {
                                   // If the trip does not match the selected criteria or it's already added, don't display it
                                   return SizedBox.shrink();
@@ -213,13 +264,12 @@ class _SearchTripState extends State<SearchTrip> {
                   },
                 ),
               ),
-
             ],
           ),
         ),
-
       ),
     );
   }
 }
+
 

@@ -11,11 +11,10 @@ class PublishTrip extends StatefulWidget {
   const PublishTrip({super.key});
 
   @override
-  State<PublishTrip> createState() => publishTrip();
+  State<PublishTrip> createState() => PublishTripState();
 }
 
-
-class publishTrip extends State<PublishTrip> {
+class PublishTripState extends State<PublishTrip> {
 
   final FirebaseAuthService _auth = FirebaseAuthService();
   final user = FirebaseAuth.instance.currentUser;
@@ -26,7 +25,7 @@ class publishTrip extends State<PublishTrip> {
   TextEditingController _priceController = TextEditingController();
   TextEditingController _numberController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
-
+  DateTime _selectedDate = DateTime.now();
 
   @override
   void dispose() {
@@ -48,15 +47,13 @@ class publishTrip extends State<PublishTrip> {
         title: Text(
           'Publish Your Trip',
           style: TextStyle(
-            color: Colors.white,
-            fontFamily: 'Poppins'
-            ),
+              color: Colors.white,
+              fontFamily: 'Poppins'
           ),
-          centerTitle: true,    
+        ),
+        centerTitle: true,
       ),
-      
-      body: 
-      Stack(
+      body: Stack(
         children: [
           Opacity(
             opacity: 0.7,
@@ -67,21 +64,19 @@ class publishTrip extends State<PublishTrip> {
               height: double.infinity,
             ),
           ),
-          
-    Positioned(
-      top: 5,
-      left: MediaQuery.of(context).size.width / 2 - 311 / 2, // Calculate the left position to center the image horizontally
-      child: Container(
-        width: 311, // Set the width of the container
-        child: Opacity(
-          opacity: 1,
-          child: Image.asset(
-            "assets/logoS.png",
+          Positioned(
+            top: 5,
+            left: MediaQuery.of(context).size.width / 2 - 311 / 2, // Calculate the left position to center the image horizontally
+            child: Container(
+              width: 311, // Set the width of the container
+              child: Opacity(
+                opacity: 1,
+                child: Image.asset(
+                  "assets/logoS.png",
+                ),
+              ),
+            ),
           ),
-        ),
-      ),
-    ),
-
           Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
@@ -96,11 +91,11 @@ class publishTrip extends State<PublishTrip> {
                       color: Colors.white70,
                     ),
                     decoration: InputDecoration(
-                      hintText: 'Departure',
-                      hintStyle: TextStyle(
-                        color: Colors.white60,
-                        fontFamily: 'Poppins',
-                      ),
+                        hintText: 'Departure',
+                        hintStyle: TextStyle(
+                          color: Colors.white60,
+                          fontFamily: 'Poppins',
+                        ),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
@@ -111,7 +106,6 @@ class publishTrip extends State<PublishTrip> {
                     ),
                   ),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: TextField(
@@ -120,11 +114,11 @@ class publishTrip extends State<PublishTrip> {
                       color: Colors.white70,
                     ),
                     decoration: InputDecoration(
-                      hintText: 'Destination',
-                      hintStyle: TextStyle(
-                        color: Colors.white60,
-                        fontFamily: 'Poppins',
-                      ),
+                        hintText: 'Destination',
+                        hintStyle: TextStyle(
+                          color: Colors.white60,
+                          fontFamily: 'Poppins',
+                        ),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
@@ -135,7 +129,6 @@ class publishTrip extends State<PublishTrip> {
                     ),
                   ),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: TextField(
@@ -144,11 +137,11 @@ class publishTrip extends State<PublishTrip> {
                       color: Colors.white70,
                     ),
                     decoration: InputDecoration(
-                      hintText: 'Price',
-                      hintStyle: TextStyle(
-                        color: Colors.white60,
-                        fontFamily: 'Poppins',
-                      ),
+                        hintText: 'Price',
+                        hintStyle: TextStyle(
+                          color: Colors.white60,
+                          fontFamily: 'Poppins',
+                        ),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
@@ -159,7 +152,6 @@ class publishTrip extends State<PublishTrip> {
                     ),
                   ),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: TextField(
@@ -168,11 +160,11 @@ class publishTrip extends State<PublishTrip> {
                       color: Colors.white70,
                     ),
                     decoration: InputDecoration(
-                      hintText: 'Number Of Persons',
-                      hintStyle: TextStyle(
-                        color: Colors.white60,
-                        fontFamily: 'Poppins',
-                      ),
+                        hintText: 'Number Of Persons',
+                        hintStyle: TextStyle(
+                          color: Colors.white60,
+                          fontFamily: 'Poppins',
+                        ),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
@@ -183,15 +175,14 @@ class publishTrip extends State<PublishTrip> {
                     ),
                   ),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.all(12),
                   child: Row(
                     children: [
                       Text('Pet-Friendly',
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontFamily: 'Poppins',
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontFamily: 'Poppins',
                         ),
                       ),
                       SizedBox(
@@ -214,7 +205,6 @@ class publishTrip extends State<PublishTrip> {
                     ],
                   ),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: TextField(
@@ -223,11 +213,11 @@ class publishTrip extends State<PublishTrip> {
                       color: Colors.white70,
                     ),
                     decoration: InputDecoration(
-                      hintText: 'Description (optional)',
-                      hintStyle: TextStyle(
-                        color: Colors.white60,
-                        fontFamily: 'Poppins',
-                      ),
+                        hintText: 'Description (optional)',
+                        hintStyle: TextStyle(
+                          color: Colors.white60,
+                          fontFamily: 'Poppins',
+                        ),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
@@ -238,25 +228,37 @@ class publishTrip extends State<PublishTrip> {
                     ),
                   ),
                 ),
-
+                ElevatedButton(
+                  onPressed: () {
+                    _selectDate(context);
+                  },
+                  child: Text(
+                    'Select Date',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Poppins',
+                    ),
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.grey.shade800),
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: ElevatedButton(
-                    onPressed: () {
-                      _publish();
-                    },
-                    child: Text(
-                      'Submit',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Poppins',
+                      onPressed: () {
+                        _publish();
+                      },
+                      child: Text(
+                        'Submit',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Poppins',
                         ),
                       ),
-
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.grey.shade800)
+                          backgroundColor: MaterialStateProperty.all(Colors.grey.shade800)
                       )
-                    
                   ),
                 ),
               ],
@@ -267,6 +269,23 @@ class publishTrip extends State<PublishTrip> {
     );
   }
 
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(DateTime.now().year + 1),
+    );
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
+  }
+
+
+
+
   void _publish() async {
     String departure = _departureController.text;
     String destination = _destinationController.text;
@@ -276,9 +295,11 @@ class publishTrip extends State<PublishTrip> {
     String description = _descriptionController.text;
 
     String? userEmail = user?.email; // Get current user's email
+    String uid = user!.uid;
     String publisher = await _getPublisherName(userEmail!) ?? "Unknown";
+    double minimumRating = await _getMinRating(uid) ?? 0.0;
 
-    addTripDetails(departure, destination, petfriendly, double.parse(price), int.parse(number), description, publisher);
+    addTripDetails(departure, destination, petfriendly, double.parse(price), int.parse(number), description, publisher, minimumRating);
     showToast(message: "Trip has been posted");
     Navigator.pushNamed(context, "/home");
   }
@@ -306,7 +327,35 @@ class publishTrip extends State<PublishTrip> {
     }
   }
 
-  Future addTripDetails(String departure, String destination, String petfriendly, double price, int number, String description, String publisher) async{
+  Future<double?> _getMinRating(String uid) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+          .collection('driver_preferences')
+          .where('userId', isEqualTo: uid)
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        var minRating = snapshot.docs.first.get('minimumRating');
+        if (minRating is int) {
+          return minRating.toDouble();
+        } else if (minRating is double) {
+          return minRating;
+        } else {
+          // Handle unexpected type if necessary
+          return null;
+        }
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print('Error fetching minimumRating: $e');
+      return null;
+    }
+  }
+
+
+
+  Future addTripDetails(String departure, String destination, String petfriendly, double price, int number, String description, String publisher, double minimumRating) async{
     await FirebaseFirestore.instance.collection('trips').add({
       'departure': departure,
       'destination': destination,
@@ -315,6 +364,9 @@ class publishTrip extends State<PublishTrip> {
       'number of passengers': number,
       'description': description,
       'publisher': publisher,
+      'minimumRating': minimumRating,
+      'date': _selectedDate, // Add selected date to the data
     });
   }
+
 }
