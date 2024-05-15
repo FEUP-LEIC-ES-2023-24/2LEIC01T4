@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'driver_preferences_provider.dart';
 
 class PreferencesScreen extends StatelessWidget {
-  const PreferencesScreen({super.key});
+  const PreferencesScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -69,18 +70,23 @@ class PreferencesScreen extends StatelessWidget {
 
   void _setRating(int starValue, DriverPreferencesProvider driverPreferences) {
     double newRating = starValue.toDouble();
-    if (newRating == driverPreferences.minimumRating) {
-      newRating = newRating - 1;
-    }
     driverPreferences.updateMinimumRating(newRating);
   }
 
-  void _savePreferences(BuildContext context, DriverPreferencesProvider driverPreferences) {
-    //TODO Replace 'driver_id' with the actual driver ID
-    String? userId = FirebaseAuth.instance.currentUser?.uid;
-    if(userId != null) {
-      driverPreferences.savePreferences(userId);
+  void _savePreferences(BuildContext context, DriverPreferencesProvider driverPreferences) async {
+    // Get the current user
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      // Retrieve the user's UID
+      String userId = user.uid;
+
+      // Create driver preferences document in Firestore
+      await FirebaseFirestore.instance.collection('driver_preferences').add({
+        'userId': userId,
+        'minimumRating': driverPreferences.minimumRating,
+        // Include other preferences fields here
+      });
     }
     Navigator.pop(context);
-}
+  }
 }

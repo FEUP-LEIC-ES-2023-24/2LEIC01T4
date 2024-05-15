@@ -158,12 +158,25 @@ class _ContactDriverPageState extends State<ContactDriverPage> {
       timestamp: timestamp,
     );
 
-    List<String> ids = [currentUserID, receiverID];
-    ids.sort();
-    String chatRoomID = ids.join('_');
+    try {
+      List<String> ids = [currentUserID, receiverID];
+      ids.sort();
+      String chatRoomID = ids.join('_');
 
-    await FirebaseFirestore.instance.collection("chat_rooms").doc(chatRoomID).collection("messages").add(newMessage.toMap());
+      // Check if the chat room exists, if not, create it
+      final chatRoomRef = FirebaseFirestore.instance.collection("chat_rooms").doc(chatRoomID);
+      if (!(await chatRoomRef.get()).exists) {
+        await chatRoomRef.set({});
+      }
+
+      // Add the message to the chat room
+      await chatRoomRef.collection("messages").add(newMessage.toMap());
+    } catch (e) {
+      print('Error sending message: $e');
+      // Handle error here
+    }
   }
+
 
   Stream<QuerySnapshot> _getMessage(String userID, otherUserID) {
     List<String> ids = [userID, otherUserID];
