@@ -14,6 +14,7 @@ You can find here details about the GetALift, from a high-level vision to low-le
   * [Physical architecture](#Physical-Architecture)
 * [Project management](#Project-Management)
   * [Sprint 1](#Sprint-1)
+  * [Sprint 2](#Sprint-2)
 
 
 Contributions are expected to be made exclusively by the initial team, but we may open them to the community, after the course, in all areas and topics: requirements, technologies, development, experimentation, testing, etc.
@@ -88,7 +89,7 @@ On this sprint were able to do what we propose ourselves to do, so we think that
 </div>
 
 <div style="text-align: center;">
-    <div>Sprint 1 end:</div>
+    <div>Sprint 2 end:</div>
     <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC01T4/blob/main/docs/Sprint2%20after.png" alt="Sprint2 after" style="width: 100%;">
 </div>
 
