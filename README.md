@@ -95,3 +95,18 @@ On this sprint were able to do what we propose ourselves to do, so we think that
 
 On this sprint we were able to do what we propose ourselves to do, so we think that our estimates on the user_stories were accurate and we divide the work more evenly, each person had one user_story and that person had to do everything related to that user_story (tests, dart code, etc...). on another hand, we didn't use branches for each feature, we did work only with the main branch and our tests were not working correctly with the firebase implemented. To sum up, the next sprint we have to conclude the tests and we will try to use more branches when working in the user_stories so we are more organized.
 
+
+### Sprint 3
+
+
+<div style="text-align: center;">
+    <div>Sprint 3 start:</div>
+    <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC01T4/blob/main/docs/Start_Sprint3.png" alt="Sprint3 before" style="width: 100%;">
+</div>
+
+<div style="text-align: center;">
+    <div>Sprint 3 end:</div>
+    <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC01T4/blob/main/docs/End_Sprint3.png" alt="Sprint3 after" style="width: 100%;">
+</div>
+
+
