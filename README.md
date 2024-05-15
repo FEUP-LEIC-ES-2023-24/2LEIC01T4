@@ -120,11 +120,14 @@ Various pages on the app become easier to use, for exemple the home page. Futher
 
 ### Sprint retrospective
 
-What went well?
+### What went well?
+
 As on the other sprint we were able to finnish all of the user_stories that we propose ourselves to do on this Sprint, and that way finnish all of them, which proves that our estimatives were accurate to what seemed essenssial for us to do in the time that we had. Moreover, we had time to already start little adjustaments to the visual of the app.
 
-What could have gone better?
+### What could have gone better?
+
 We were not able to make the tests work, unit or aceptance, because of the way we were setting the sample database.
 
-Puzzles?
+### Puzzles?
+
 Except the problem with the tests with didn't have nothing that was creating confusion in the resolution of the project.
