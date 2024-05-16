@@ -117,7 +117,10 @@ class _SearchTripState extends State<SearchTrip> {
                         ),
                         suggestionsCallback: (pattern) async {
                           final districts = FirebaseFirestore.instance.collection('districts');
-                          final snapshot = await districts.where('nome', isGreaterThanOrEqualTo: pattern).get();
+                          final snapshot = await districts
+                              .where('nome', isGreaterThanOrEqualTo: pattern)
+                              .where('nome', isLessThanOrEqualTo: pattern + '\uf8ff')
+                              .get();
                           return snapshot.docs.map((doc) => doc['nome']).toList();
                         },
                         itemBuilder: (context, suggestion) {
@@ -146,7 +149,10 @@ class _SearchTripState extends State<SearchTrip> {
                         ),
                         suggestionsCallback: (pattern) async {
                           final districts = FirebaseFirestore.instance.collection('districts');
-                          final snapshot = await districts.where('nome', isGreaterThanOrEqualTo: pattern).get();
+                          final snapshot = await districts
+                              .where('nome', isGreaterThanOrEqualTo: pattern)
+                              .where('nome', isLessThanOrEqualTo: pattern + '\uf8ff')
+                              .get();
                           return snapshot.docs.map((doc) => doc['nome']).toList();
                         },
                         itemBuilder: (context, suggestion) {
