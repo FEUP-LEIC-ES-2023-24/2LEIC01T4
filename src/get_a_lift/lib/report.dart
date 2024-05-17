@@ -44,6 +44,7 @@ class _ReportPageState extends State<ReportPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey.shade800,
       appBar: AppBar(
         backgroundColor: Colors.green.shade500,
@@ -91,10 +92,14 @@ class _ReportPageState extends State<ReportPage> {
                   padding: const EdgeInsets.all(10),
                   child: TextField(
                     controller: _reasonController,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Poppins'
+                    ),
                     decoration: InputDecoration(
                         hintText: 'Enter the reason for the report',
                         hintStyle: TextStyle(
-                            color: Colors.white,
+                            color: Colors.white70,
                             fontFamily: 'Poppins'
                         ),
                         border: OutlineInputBorder(
@@ -111,10 +116,14 @@ class _ReportPageState extends State<ReportPage> {
                   padding: const EdgeInsets.all(10),
                   child: TextField(
                     controller: _driverController,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Poppins'
+                    ),
                     decoration: InputDecoration(
                         hintText: 'Enter the name of the driver you are reporting',
                         hintStyle: TextStyle(
-                            color: Colors.white,
+                            color: Colors.white70,
                             fontFamily: 'Poppins'
                         ),
                         border: OutlineInputBorder(
@@ -133,10 +142,14 @@ class _ReportPageState extends State<ReportPage> {
                     width: double.infinity,
                     child: TextField(
                       controller: _descriptionController,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Poppins'
+                      ),
                       decoration: InputDecoration(
                           hintText: 'Description of the incident',
                           hintStyle: TextStyle(
-                              color: Colors.white,
+                              color: Colors.white70,
                               fontFamily: 'Poppins'
                           ),
                           border: OutlineInputBorder(

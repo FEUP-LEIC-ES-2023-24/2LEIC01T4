@@ -121,8 +121,21 @@ class _ProfilePageOthersState extends State<ProfilePageOthers> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Center(
+              child: CircleAvatar(
+                radius: 50,
+                backgroundColor: Colors.green,
+                child: Icon(
+                  Icons.account_circle,
+                  size: 50,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            SizedBox(height: 16),
             Text(
               'Username: $username',
               style: TextStyle(
@@ -142,7 +155,7 @@ class _ProfilePageOthersState extends State<ProfilePageOthers> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 25),
             Text(
               'Trips:',
               style: TextStyle(
@@ -166,8 +179,12 @@ class _ProfilePageOthersState extends State<ProfilePageOthers> {
                         ),
                       );
                     },
-                    child: ListTile(
+                    child: Card(child:
+                        ListTile(
                       title: ProfileInfoTrip(documentId: docIDs[index]),
+                      ),
+                      color: Colors.green.shade50,
+                      elevation: 5,
                     ),
                   );
                 },
@@ -187,8 +204,12 @@ class _ProfilePageOthersState extends State<ProfilePageOthers> {
               child: ListView.builder(
                 itemCount: reviewsIDs.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
+                  return Card(child:
+                      ListTile(
                     title: ProfileReviews(documentId: reviewsIDs[index]),
+                  ),
+                    color: Colors.green.shade50,
+                    elevation: 5,
                   );
                 },
               ),
@@ -214,7 +235,30 @@ class _ProfilePageOthersState extends State<ProfilePageOthers> {
               print('User not found with username: $username');
             }
           },
-          child: Text('Contact $username'),
+          child: Text('Contact $username',
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontSize: 14,
+              color: Colors.white,
+            ),
+          ),
+          style: ButtonStyle(
+            padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue),
+            shadowColor: MaterialStateProperty.all<Color>(Colors.grey),
+            elevation: MaterialStateProperty.resolveWith<double>(
+                  (Set<MaterialState> states) {
+                if (states.contains(MaterialState.pressed)) return 10;
+                return 5; // default elevation
+              },
+            ),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
+              ),
+            ),
+            animationDuration: Duration(milliseconds: 200)
+          ),
         ),
       ),
     );

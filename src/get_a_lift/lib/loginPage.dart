@@ -37,7 +37,6 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.grey.shade800,
-
         body: Stack(
           children: [
           // Background image

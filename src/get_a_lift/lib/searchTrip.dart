@@ -88,6 +88,7 @@ class _SearchTripState extends State<SearchTrip> {
       home: Scaffold(
         appBar: AppBar(
           title: Text('Trips'),
+          backgroundColor: Colors.green,
           centerTitle: true,
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
@@ -235,9 +236,13 @@ class _SearchTripState extends State<SearchTrip> {
                                             ),
                                           );
                                         },
-                                        child: ListTile(
+                                        child: Card(child:
+                                        ListTile(
                                           title: Text(
                                               '$departureCity >> $destinationCity'),
+                                        ),
+                                          color: Colors.green.shade50,
+                                          elevation: 5,
                                         ),
                                       );
                                     } else {

@@ -17,7 +17,7 @@ class ChatBubble extends StatelessWidget{
       margin: EdgeInsets.symmetric(vertical: 2.5, horizontal: 25),
       child: Text(
       message,
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(color: Colors.white, fontSize: 15, fontFamily: 'Poppins'),
     ),
 
     );

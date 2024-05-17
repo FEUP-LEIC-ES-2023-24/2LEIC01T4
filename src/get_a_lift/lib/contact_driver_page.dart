@@ -129,14 +129,18 @@ class _ContactDriverPageState extends State<ContactDriverPage> {
               controller: _messageController,
               obscureText: false,
               decoration: InputDecoration(
-                border: InputBorder.none, // Remove the border
                 hintText: 'Type your message here...', // Add a hint text
+                filled: true, // Add a filled color
+                fillColor: Colors.white, // Set the filled color to white
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0), // Add rounded corners
+                ),
               ),
             ),
           ),
           IconButton(
             onPressed: sendMessage,
-            icon: Icon(Icons.arrow_upward),
+            icon: Icon(Icons.arrow_upward, color: Colors.green),
           ),
         ],
       ),

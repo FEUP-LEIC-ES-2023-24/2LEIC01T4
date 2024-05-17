@@ -36,6 +36,7 @@ class _ReviewPageState extends State<ReviewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey.shade800,
       appBar: AppBar(
         backgroundColor: Colors.green.shade500,
@@ -101,10 +102,14 @@ class _ReviewPageState extends State<ReviewPage> {
                   padding: const EdgeInsets.all(10),
                   child: TextField(
                     controller: _driverController,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Poppins'
+                    ),
                     decoration: InputDecoration(
                         hintText: 'Enter the name of the driver you are reviewing',
                         hintStyle: TextStyle(
-                            color: Colors.white,
+                            color: Colors.white70,
                             fontFamily: 'Poppins'
                         ),
                         border: OutlineInputBorder(
@@ -125,10 +130,14 @@ class _ReviewPageState extends State<ReviewPage> {
                     width: double.infinity,
                     child: TextField(
                       controller: _descriptionController,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Poppins'
+                      ),
                       decoration: InputDecoration(
                           hintText: 'Comment on your experience with the driver',
                           hintStyle: TextStyle(
-                              color: Colors.white,
+                              color: Colors.white70,
                               fontFamily: 'Poppins'
                           ),
                           border: OutlineInputBorder(

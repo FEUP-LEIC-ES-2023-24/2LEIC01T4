@@ -89,12 +89,12 @@ class PublishTripState extends State<PublishTrip> {
                   child: TextField(
                     controller: _departureController,
                     style: TextStyle(
-                      color: Colors.white70,
+                      color: Colors.white,
                     ),
                     decoration: InputDecoration(
                         hintText: 'Departure',
                         hintStyle: TextStyle(
-                          color: Colors.white60,
+                          color: Colors.white70,
                           fontFamily: 'Poppins',
                         ),
                         border: OutlineInputBorder(
@@ -112,12 +112,12 @@ class PublishTripState extends State<PublishTrip> {
                   child: TextField(
                     controller: _destinationController,
                     style: TextStyle(
-                      color: Colors.white70,
+                      color: Colors.white,
                     ),
                     decoration: InputDecoration(
                         hintText: 'Destination',
                         hintStyle: TextStyle(
-                          color: Colors.white60,
+                          color: Colors.white70,
                           fontFamily: 'Poppins',
                         ),
                         border: OutlineInputBorder(
@@ -135,12 +135,12 @@ class PublishTripState extends State<PublishTrip> {
                   child: TextField(
                     controller: _priceController,
                     style: TextStyle(
-                      color: Colors.white70,
+                      color: Colors.white,
                     ),
                     decoration: InputDecoration(
                         hintText: 'Price',
                         hintStyle: TextStyle(
-                          color: Colors.white60,
+                          color: Colors.white70,
                           fontFamily: 'Poppins',
                         ),
                         border: OutlineInputBorder(
@@ -158,12 +158,12 @@ class PublishTripState extends State<PublishTrip> {
                   child: TextField(
                     controller: _numberController,
                     style: TextStyle(
-                      color: Colors.white70,
+                      color: Colors.white,
                     ),
                     decoration: InputDecoration(
                         hintText: 'Number Of Persons',
                         hintStyle: TextStyle(
-                          color: Colors.white60,
+                          color: Colors.white70,
                           fontFamily: 'Poppins',
                         ),
                         border: OutlineInputBorder(
@@ -182,7 +182,7 @@ class PublishTripState extends State<PublishTrip> {
                     children: [
                       Text('Pet-Friendly',
                         style: TextStyle(
-                          color: Colors.white70,
+                          color: Colors.white,
                           fontFamily: 'Poppins',
                         ),
                       ),
@@ -211,12 +211,12 @@ class PublishTripState extends State<PublishTrip> {
                   child: TextField(
                     controller: _descriptionController,
                     style: TextStyle(
-                      color: Colors.white70,
+                      color: Colors.white,
                     ),
                     decoration: InputDecoration(
                         hintText: 'Description (optional)',
                         hintStyle: TextStyle(
-                          color: Colors.white60,
+                          color: Colors.white70,
                           fontFamily: 'Poppins',
                         ),
                         border: OutlineInputBorder(

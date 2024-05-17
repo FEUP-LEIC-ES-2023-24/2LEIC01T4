@@ -9,6 +9,7 @@ import 'package:get_a_lift/registerPage.dart';
 import 'package:get_a_lift/searchTrip.dart';
 import 'package:provider/provider.dart';
 import 'driver_preferences_provider.dart';
+import 'package:flutter/services.dart';
 import 'homePage.dart';
 
 
@@ -36,7 +37,10 @@ Future main() async{
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Get a lift',

@@ -128,8 +128,21 @@ class _ProfilePageState extends State<ProfilePage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Center(
+              child: CircleAvatar(
+                radius: 50,
+                backgroundColor: Colors.green,
+                child: Icon(
+                  Icons.account_circle,
+                  size: 50,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            SizedBox(height: 16),
             if (username != null)
               Text(
                 'Username: $username',
@@ -151,7 +164,10 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             SizedBox(height: 16),
-            MaterialButton(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+            ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
@@ -162,25 +178,39 @@ class _ProfilePageState extends State<ProfilePage> {
               },
               child: Text(
                 'Change Password',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Poppins',
+                  fontSize: 12,
+                ),
               ),
-              color: Colors.blue,
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.lightBlue),
+              ),
             ),
-            const SizedBox(height: 16),
+
             if (permission == 'driver') ...[
-              MaterialButton(
+              ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const PreferencesScreen()),
                   );
                 },
-                child: const Text('Preferences'),
-                color: Colors.blue,
+                child: const Text('Preferences',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Poppins',
+                      fontSize: 12,
+                    )
+              ),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.lightBlue),
+                ),
               ),
             ],
-            const SizedBox(height: 16),
             if (permission == 'passenger') ...[
-              MaterialButton(
+              ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -191,12 +221,20 @@ class _ProfilePageState extends State<ProfilePage> {
                 },
                 child: Text(
                   "Add Driver's License",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Poppins',
+                    fontSize: 12,
+                  ),
                 ),
-                color: Colors.blue,
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.lightBlue),
+                ),
               ),
-              SizedBox(height: 16),
             ],
-            SizedBox(height: 16),
+            ],
+            ),
+            SizedBox(height: 25),
             Text(
               'Your Trips:',
               style: TextStyle(
@@ -220,8 +258,13 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       );
                     },
-                    child: ListTile(
+                    child:
+                    Card(child:
+                      ListTile(
                       title: ProfileInfoTrip(documentId: docIDs[index]),
+                    ),
+                      color: Colors.green.shade50,
+                      elevation: 5,
                     ),
                   );
                 },
@@ -241,8 +284,12 @@ class _ProfilePageState extends State<ProfilePage> {
               child: ListView.builder(
                 itemCount: reviewsIDs.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
+                  return Card(child:
+                  ListTile(
                     title: ProfileReviews(documentId: reviewsIDs[index]),
+                  ),
+                    color: Colors.green.shade50,
+                    elevation: 5,
                   );
                 },
               ),

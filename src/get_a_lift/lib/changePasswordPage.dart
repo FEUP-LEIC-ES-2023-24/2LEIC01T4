@@ -53,7 +53,7 @@ class _changePasswordPageState extends State<changePasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.grey.shade800,
       appBar: AppBar(
         title: Text(
           'Change Your Password',
@@ -86,13 +86,13 @@ class _changePasswordPageState extends State<changePasswordPage> {
               'Enter your email for you to receive an email to reset your password',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 17,
                 fontFamily: 'Poppins',
                 color: Colors.black,
               ),
             ),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 25),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 80),
             child: TextField(
@@ -104,23 +104,21 @@ class _changePasswordPageState extends State<changePasswordPage> {
               decoration: InputDecoration(
                 hintText: 'Email',
                 hintStyle: TextStyle(
-                  color: Colors.black,
+                  color: Colors.white70,
                   fontFamily: 'Poppins',
                 ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
+                border: OutlineInputBorder(),
               ),
             ),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 25),
           ElevatedButton(
             onPressed: passwordReset,
             child: Text(
               'Reset Password',
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 20,
+                fontSize: 15,
                 fontFamily: 'Poppins',
               ),
             ),

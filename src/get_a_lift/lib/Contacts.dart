@@ -87,17 +87,25 @@ class MessageListPageState extends State<MessageListPage> {
         itemCount: contacts.length,
         itemBuilder: (context, index) {
           final contact = contacts[index];
-          return ListTile(
-            title: Text(contact['username']),
-            subtitle: Text(contact['email']),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProfilePageOthers(username: contact['username']),
-                ),
-              );
+          return Card(child:
+              ListTile(
+              leading: Icon(Icons.account_circle, size: 40),
+              title: Text(contact['username']),
+              subtitle: Text(contact['email']),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfilePageOthers(username: contact['username']),
+                  ),
+                );
             },
+            ),
+            color: Colors.green.shade50,
+            elevation: 3,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
           );
         },
       ),

@@ -3,6 +3,7 @@ import 'package:get_a_lift/Contacts.dart';
 import 'package:get_a_lift/publishTrip.dart';
 import 'package:get_a_lift/report.dart';
 import 'package:get_a_lift/searchTrip.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 import 'ProfilePage.dart';
 import 'makeReview.dart';
@@ -34,8 +35,27 @@ class homePagePassenger extends State<HomePagePassenger> {
       ),
 
       body: Column (
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          SizedBox(height:20),
+          Padding(
+            padding: EdgeInsets.all(20),
+            child: Container(
+              child: AnimatedTextKit(
+                animatedTexts: [
+                  TyperAnimatedText(
+                    'Welcome to Get a Lift!',
+                    textStyle: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 30,
+                      color: Colors.green,
+                    ),
+                  ),
+                ],
+                isRepeatingAnimation: false,
+              ),
+            ),
+          ),
+          SizedBox(height: 140),
           Center(
             child:
             ElevatedButton(
