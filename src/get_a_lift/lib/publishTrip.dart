@@ -332,7 +332,7 @@ class PublishTripState extends State<PublishTrip> {
     try {
       QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
           .collection('driver_preferences')
-          .where('userId', isEqualTo: uid)
+          .where('userDocumentId', isEqualTo: uid)
           .get();
 
       if (snapshot.docs.isNotEmpty) {

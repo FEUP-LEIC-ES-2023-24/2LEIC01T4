@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,6 +21,7 @@ class ReviewPage extends StatefulWidget {
 class _ReviewPageState extends State<ReviewPage> {
 
   final FirebaseAuthService _auth = FirebaseAuthService();
+  final user = FirebaseAuth.instance.currentUser;
 
   double rating = 0;
   TextEditingController _driverController = TextEditingController();
@@ -233,14 +235,45 @@ class _ReviewPageState extends State<ReviewPage> {
 
       showToast(message: "Review submitted successfully");
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
-      );
+      if (user != null) {
+        bool isDriver = await _getPublisherPermission(user!.email!);
+        if (isDriver) {
+          Navigator.pushNamed(context, "/home");
+        } else {
+          Navigator.pushNamed(context, "/homePassenger");
+        }
+      }
     } else {
       showToast(message: "Driver not found!");
     }
   }
 
-
+  Future<bool> _getPublisherPermission(String email) async {
+    try {
+      // Fetch user's permission from the database using email
+      QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('email', isEqualTo: email)
+          .get();
+      String permission;
+      // Check if any document matches the email
+      if (snapshot.docs.isNotEmpty) {
+        // Return the permission from the first document found
+        permission = snapshot.docs.first.get('permission');
+      } else {
+        // If no document matches the email, consider it as a passenger
+        permission = 'passenger';
+      }
+      // Check permission and return accordingly
+      if (permission == 'driver') {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      // Handle exceptions here
+      print('Error fetching permission: $e');
+      return false; // Or handle differently based on your use case
+    }
+  }
 }

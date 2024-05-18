@@ -241,5 +241,4 @@ class _LoginPageState extends State<LoginPage> {
       return false; // Or handle differently based on your use case
     }
   }
-
 }
