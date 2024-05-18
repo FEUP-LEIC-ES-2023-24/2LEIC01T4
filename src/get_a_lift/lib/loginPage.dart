@@ -14,6 +14,8 @@ import 'firebase_auth_implementation/firebase_auth_services.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
+
+
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -22,6 +24,7 @@ class _LoginPageState extends State<LoginPage> {
 
   final FirebaseAuthService _auth = FirebaseAuthService();
 
+  bool passwordVisible = false;
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
@@ -35,163 +38,181 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.grey.shade800,
-        body: Stack(
-          children: [
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.grey.shade800,
+      body: Stack(
+        children: [
           // Background image
           Opacity(
-          opacity: 0.7,
-          child: Image.asset(
-            "assets/gradient.jpg",
-            fit: BoxFit.cover,
-            width: double.infinity,
-            height: double.infinity,
+            opacity: 0.7,
+            child: Image.asset(
+              "assets/gradient.jpg",
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: double.infinity,
+            ),
           ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Login',
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 50,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(100, 100, 100, 8),
-              child: TextField(
-                controller: _emailController,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Login',
                 style: TextStyle(
                   color: Colors.white70,
-                ),
-                decoration: InputDecoration(
-                  hintText: 'Email',
-                  hintStyle: TextStyle(
-                    color: Colors.white70,
-                    fontFamily: 'Poppins',
-                  ),
-                  border: OutlineInputBorder(),
+                  fontSize: 50,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.fromLTRB(100, 8, 100, 8),
-              child: TextField(
-                controller: _passwordController,
-                style: TextStyle(
-                  color: Colors.white70,
-                ),
-                decoration: InputDecoration(
-                  hintText: 'Password',
-                  hintStyle: TextStyle(
-                    color: Colors.white70,
-                    fontFamily: 'Poppins',
-                  ),
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            ),
-
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(context,
-                        MaterialPageRoute(
-                            builder: (context) {
-                              return changePasswordPage();
-                            }
-                        ),
-                      );
-                    },
-                    child: Text(
-                      'Forgot Password?',
-                      style: TextStyle(
-                        color: Colors.grey.shade800,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  )
-                ],
-              ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Don't have an account?",
-                    style: TextStyle(
-                      color: Colors.white70,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => RegisterPage()),
-                            (route) => false,
-                      );
-                    },
-                    child: Text('Sign up here!',
-                      style: TextStyle(
-                        color: Colors.grey.shade800,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8.0, 20, 8.0, 8.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  _login();
-                },
-                child: Text('Login',
+              Padding(
+                padding: const EdgeInsets.fromLTRB(100, 100, 100, 8),
+                child: TextField(
+                  controller: _emailController,
                   style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'Poppins',
-                    fontSize: 15,
+                    color: Colors.white70,
+                  ),
+                  decoration: InputDecoration(
+                    hintText: 'Email',
+                    hintStyle: TextStyle(
+                      color: Colors.white70,
+                      fontFamily: 'Poppins',
+                    ),
+                    border: OutlineInputBorder(),
                   ),
                 ),
-                style: ButtonStyle(
-                    padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-                    shadowColor: MaterialStateProperty.all<Color>(Colors.grey),
-                    elevation: MaterialStateProperty.resolveWith<double>(
-                          (Set<MaterialState> states) {
-                        if (states.contains(MaterialState.pressed)) return 10;
-                        return 5; // default elevation
+              ),
+
+              Padding(
+                padding: const EdgeInsets.fromLTRB(100, 8, 100, 8),
+                child: TextField(
+                  controller: _passwordController,
+                  obscureText: passwordVisible,
+                  style: TextStyle(
+                    color: Colors.white70,
+                  ),
+                  decoration: InputDecoration(
+                    hintText: 'Password',
+                    hintStyle: TextStyle(
+                      color: Colors.white70,
+                      fontFamily: 'Poppins',
+                    ),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        passwordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.white70,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          passwordVisible = !passwordVisible;
+                        });
                       },
                     ),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                    ),
-                    animationDuration: Duration(milliseconds: 200)
+                    alignLabelWithHint: false,
+                    filled: false,
+                    border: OutlineInputBorder(),
+                  ),
+                  keyboardType: TextInputType.visiblePassword,
+                  textInputAction: TextInputAction.done,
                 ),
               ),
-            )
 
-          ],
-        )
-      ],
-    ),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.push(context,
+                            MaterialPageRoute(
+                                builder: (context) {
+                                  return changePasswordPage();
+                                }
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'Forgot Password?',
+                          style: TextStyle(
+                            color: Colors.grey.shade800,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                    )
+                  ],
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Don't have an account?",
+                      style: TextStyle(
+                        color: Colors.white70,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => RegisterPage()),
+                              (route) => false,
+                        );
+                      },
+                      child: Text('Sign up here!',
+                        style: TextStyle(
+                          color: Colors.grey.shade800,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8.0, 20, 8.0, 8.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    _login();
+                  },
+                  child: Text('Login',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Poppins',
+                      fontSize: 15,
+                    ),
+                  ),
+                  style: ButtonStyle(
+                      padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                      shadowColor: MaterialStateProperty.all<Color>(Colors.grey),
+                      elevation: MaterialStateProperty.resolveWith<double>(
+                            (Set<MaterialState> states) {
+                          if (states.contains(MaterialState.pressed)) return 10;
+                          return 5; // default elevation
+                        },
+                      ),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                      ),
+                      animationDuration: Duration(milliseconds: 200)
+                  ),
+                ),
+              )
+
+            ],
+          )
+        ],
+      ),
     );
   }
 
@@ -241,5 +262,4 @@ class _LoginPageState extends State<LoginPage> {
       return false; // Or handle differently based on your use case
     }
   }
-
 }

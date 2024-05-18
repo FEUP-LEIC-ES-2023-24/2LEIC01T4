@@ -1,11 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'driver_preferences_provider.dart';
 
 class PreferencesScreen extends StatelessWidget {
-  const PreferencesScreen({Key? key});
+  const PreferencesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +39,7 @@ class PreferencesScreen extends StatelessWidget {
                     },
                     child: Icon(
                       i <= driverPreferences.minimumRating ? Icons.star : Icons.star_border,
-                      color: Colors.yellow.shade600,
+                      color: Colors.yellow,
                       size: 40,
                     ),
                   ),
@@ -58,7 +57,6 @@ class PreferencesScreen extends StatelessWidget {
               child: const Text(
                 'Save Preferences',
                 style: TextStyle(
-                  color: Colors.white,
                   fontSize: 18,
                 ),
               ),
@@ -81,13 +79,11 @@ class PreferencesScreen extends StatelessWidget {
       // Retrieve the user's UID
       String userId = user.uid;
 
-      // Create driver preferences document in Firestore
-      await FirebaseFirestore.instance.collection('driver_preferences').add({
-        'userId': userId,
-        'minimumRating': driverPreferences.minimumRating,
-        // Include other preferences fields here
-      });
+      // Save preferences using the user's UID as the document ID in 'driver_preferences' collection
+      await driverPreferences.savePreferences(userId);
+      Navigator.pop(context);
+    } else {
+      print('Error: Current user not found.');
     }
-    Navigator.pop(context);
   }
 }

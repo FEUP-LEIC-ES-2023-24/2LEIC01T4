@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,8 @@ class ReportPage extends StatefulWidget {
 class _ReportPageState extends State<ReportPage> {
 
   final FirebaseAuthService _auth = FirebaseAuthService();
+  final user = FirebaseAuth.instance.currentUser;
+
 
   TextEditingController _reasonController = TextEditingController();
   TextEditingController _driverController = TextEditingController();
@@ -172,12 +175,13 @@ class _ReportPageState extends State<ReportPage> {
                       _image != null
                           ? CircleAvatar(
                         radius: 24,
+                        backgroundImage: MemoryImage(_image!),
                       )
-                      :const CircleAvatar(
+                          : const CircleAvatar(
                         radius: 24,
                       ),
                       Positioned(
-                        bottom:0,
+                        bottom: 0,
                         left: 0,
                         child: IconButton(
                           onPressed: selectImage,
@@ -216,12 +220,12 @@ class _ReportPageState extends State<ReportPage> {
     );
   }
 
-  void _report() async{
+  void _report() async {
     String reason = _reasonController.text;
     String driver = _driverController.text;
     String description = _descriptionController.text;
 
-    if(reason.isEmpty || driver.isEmpty || description.isEmpty){
+    if (reason.isEmpty || driver.isEmpty || description.isEmpty) {
       showToast(message: "Please fill in all fields!");
     } else {
       await FirebaseFirestore.instance.collection('reports').add({
@@ -231,9 +235,44 @@ class _ReportPageState extends State<ReportPage> {
         'image': _image,
       });
       showToast(message: "Report submitted successfully!");
-      Navigator.pushNamed(context, "/home");
+
+      if (user != null) {
+        bool isDriver = await _getPublisherPermission(user!.email!);
+        if (isDriver) {
+          Navigator.pushNamed(context, "/home");
+        } else {
+          Navigator.pushNamed(context, "/homePassenger");
+        }
+      }
     }
   }
 
+  Future<bool> _getPublisherPermission(String email) async {
+    try {
+      // Fetch user's permission from the database using email
+      QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('email', isEqualTo: email)
+          .get();
+      String permission;
+      // Check if any document matches the email
+      if (snapshot.docs.isNotEmpty) {
+        // Return the permission from the first document found
+        permission = snapshot.docs.first.get('permission');
+      } else {
+        // If no document matches the email, consider it as a passenger
+        permission = 'passenger';
+      }
+      // Check permission and return accordingly
+      if (permission == 'driver') {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      // Handle exceptions here
+      print('Error fetching permission: $e');
+      return false; // Or handle differently based on your use case
+    }
+  }
 }
-

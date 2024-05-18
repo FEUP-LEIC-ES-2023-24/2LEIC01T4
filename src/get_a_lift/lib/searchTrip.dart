@@ -16,8 +16,10 @@ class _SearchTripState extends State<SearchTrip> {
   final user = FirebaseAuth.instance.currentUser!;
   CollectionReference trips = FirebaseFirestore.instance.collection('trips');
   double? userRating;
+  String? username;
 
-  Future<void> fetchUserRating() async {
+
+  Future<void> fetchUserDetails() async {
     try {
       final snapshot = await FirebaseFirestore.instance
           .collection('users')
@@ -26,14 +28,15 @@ class _SearchTripState extends State<SearchTrip> {
 
       if (snapshot.docs.isNotEmpty) {
         final data = snapshot.docs.first.data();
-        if (data != null && data.containsKey('rating')) {
+        if (data != null) {
           setState(() {
-            userRating = data['rating'].toDouble();
+            userRating = data['rating']?.toDouble();
+            username = data['username'];
           });
         }
       }
     } catch (e) {
-      print('Error fetching user rating: $e');
+      print('Error fetching user details: $e');
     }
   }
 
@@ -63,7 +66,7 @@ class _SearchTripState extends State<SearchTrip> {
   @override
   void initState() {
     super.initState();
-    fetchUserRating();
+    fetchUserDetails();
     getCitiesDocId(); // Call getCitiesDocId when the widget is initialized
   }
 
@@ -223,7 +226,7 @@ class _SearchTripState extends State<SearchTrip> {
                                       departureDate.isAfter(DateTime.now())) {
                                     // Add the trip ID to the set
                                     uniqueTripIds.add(tripId);
-                                    if (data['publisher'] != user.uid) {
+                                    if (data['publisher'] != username) {
                                       return GestureDetector(
                                         onTap: () {
                                           // Navigate to a new page or show more details when the item is clicked
@@ -282,5 +285,3 @@ class _SearchTripState extends State<SearchTrip> {
     );
   }
 }
-
-

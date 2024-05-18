@@ -66,7 +66,7 @@ class _RegisterPageState extends State<RegisterPage> {
             fontWeight: FontWeight.bold,
           ),
         ),
-
+        SizedBox(height: 10),
         Padding(
           padding: const EdgeInsets.fromLTRB(100, 25, 100, 2),
           child: TextField(

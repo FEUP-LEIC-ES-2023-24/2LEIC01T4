@@ -4,47 +4,27 @@
         "source": "com.example.get_a_lift.app-main-23:/mipmap-mdpi/ic_launcher.png"
     },
     {
-        "merged": "C:\\Users\\USER\\.gradle\\daemon\\7.6.3\\com.example.get_a_lift.app-merged_res-30:\\mipmap-xhdpi_logoapp.png.flat",
-        "source": "C:\\Users\\USER\\.gradle\\daemon\\7.6.3\\com.example.get_a_lift.app-main-23:\\mipmap-xhdpi\\logoapp.png"
-    },
-    {
-        "merged": "C:\\Users\\USER\\.gradle\\daemon\\7.6.3\\com.example.get_a_lift.app-merged_res-30:\\mipmap-hdpi_logoapp.png.flat",
-        "source": "C:\\Users\\USER\\.gradle\\daemon\\7.6.3\\com.example.get_a_lift.app-main-23:\\mipmap-hdpi\\logoapp.png"
-    },
-    {
-        "merged": "C:\\Users\\USER\\.gradle\\daemon\\7.6.3\\com.example.get_a_lift.app-merged_res-30:\\mipmap-mdpi_logoapp.png.flat",
-        "source": "C:\\Users\\USER\\.gradle\\daemon\\7.6.3\\com.example.get_a_lift.app-main-23:\\mipmap-mdpi\\logoapp.png"
-    },
-    {
-        "merged": "com.example.get_a_lift.app-merged_res-30:/mipmap-hdpi_ic_launcher.png.flat",
-        "source": "com.example.get_a_lift.app-main-23:/mipmap-hdpi/ic_launcher.png"
-    },
-    {
-        "merged": "C:\\Users\\USER\\.gradle\\daemon\\7.6.3\\com.example.get_a_lift.app-merged_res-30:\\mipmap-xxhdpi_logoapp.png.flat",
-        "source": "C:\\Users\\USER\\.gradle\\daemon\\7.6.3\\com.example.get_a_lift.app-main-23:\\mipmap-xxhdpi\\logoapp.png"
-    },
-    {
-        "merged": "C:\\Users\\USER\\.gradle\\daemon\\7.6.3\\com.example.get_a_lift.app-merged_res-30:\\drawable_launch_background.xml.flat",
-        "source": "C:\\Users\\USER\\.gradle\\daemon\\7.6.3\\com.example.get_a_lift.app-main-23:\\drawable\\launch_background.xml"
+        "merged": "com.example.get_a_lift.app-merged_res-30:/drawable-v21_launch_background.xml.flat",
+        "source": "com.example.get_a_lift.app-main-23:/drawable-v21/launch_background.xml"
     },
     {
         "merged": "com.example.get_a_lift.app-merged_res-30:/mipmap-xxhdpi_ic_launcher.png.flat",
         "source": "com.example.get_a_lift.app-main-23:/mipmap-xxhdpi/ic_launcher.png"
     },
     {
-        "merged": "C:\\Users\\USER\\.gradle\\daemon\\7.6.3\\com.example.get_a_lift.app-merged_res-30:\\drawable-v21_launch_background.xml.flat",
-        "source": "C:\\Users\\USER\\.gradle\\daemon\\7.6.3\\com.example.get_a_lift.app-main-23:\\drawable-v21\\launch_background.xml"
+        "merged": "com.example.get_a_lift.app-merged_res-30:/drawable_launch_background.xml.flat",
+        "source": "com.example.get_a_lift.app-main-23:/drawable/launch_background.xml"
     },
     {
         "merged": "com.example.get_a_lift.app-merged_res-30:/mipmap-xhdpi_ic_launcher.png.flat",
         "source": "com.example.get_a_lift.app-main-23:/mipmap-xhdpi/ic_launcher.png"
     },
     {
-        "merged": "com.example.get_a_lift.app-merged_res-30:/mipmap-xxxhdpi_ic_launcher.png.flat",
-        "source": "com.example.get_a_lift.app-main-23:/mipmap-xxxhdpi/ic_launcher.png"
+        "merged": "com.example.get_a_lift.app-merged_res-30:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "com.example.get_a_lift.app-main-23:/mipmap-hdpi/ic_launcher.png"
     },
     {
-        "merged": "C:\\Users\\USER\\.gradle\\daemon\\7.6.3\\com.example.get_a_lift.app-merged_res-30:\\mipmap-xxxhdpi_logoapp.png.flat",
-        "source": "C:\\Users\\USER\\.gradle\\daemon\\7.6.3\\com.example.get_a_lift.app-main-23:\\mipmap-xxxhdpi\\logoapp.png"
+        "merged": "com.example.get_a_lift.app-merged_res-30:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "com.example.get_a_lift.app-main-23:/mipmap-xxxhdpi/ic_launcher.png"
     }
 ]

@@ -22,6 +22,7 @@ class homePage extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.grey.shade800,
       appBar: AppBar(
         title: Text("HomePage"),
         backgroundColor: Colors.green,
@@ -35,7 +36,18 @@ class homePage extends State<HomePage> {
           },
         ),
       ),
-      body:
+      body:Stack(
+        children: [
+        // Background image
+        Opacity(
+        opacity: 0.7,
+        child: Image.asset(
+          "assets/gradient.jpg",
+          fit: BoxFit.cover,
+          width: double.infinity,
+          height: double.infinity,
+        ),
+      ),
       Column (
         children: [
           SizedBox(height:20),
@@ -49,7 +61,8 @@ class homePage extends State<HomePage> {
                     textStyle: TextStyle(
                       fontFamily: 'Poppins',
                       fontSize: 30,
-                      color: Colors.green,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                 ],
@@ -159,6 +172,8 @@ class homePage extends State<HomePage> {
           ),
         ],
       ),
+    ],
+    ),
 
 
 
